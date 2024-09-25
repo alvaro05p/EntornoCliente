@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script t>
+        let notas=prompt("Notas para sacar la media:");
+        let notasArray=notas.split(",");
+        let suma = 0;
+        for(let i=0;i<notasArray.length;i++){
+            notasArray[i]=parseFloat(notasArray[i]);
+            suma += notasArray[i];
+        }
+        let division = suma/4;
+
+        document.write("La media de " + notasArray + " es: " + division);
+    </script>
+</body>
+</html>

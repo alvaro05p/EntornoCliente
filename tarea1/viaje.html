@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let nTramosStr = prompt("Cuantos tramos tiene el viaje?");
+        let nTramos = parseInt(nTramosStr)
+        let total = 0
+        let horas = 0
+
+        for(let i = 0;i<nTramos;i++){
+            nTramo = i+1
+            let tramoStr = prompt("Tramo " + nTramo +":");
+            total += parseInt(tramoStr);
+        }
+
+        while(total > 59){
+            total-=60
+            horas+=1
+        }
+
+        document.write(horas + " h " + total + " min ");
+    </script>
+</body>
+</html>

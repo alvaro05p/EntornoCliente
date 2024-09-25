@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let horas = new Date()
+        let ts = horas.getHours()
+        let hs = prompt("Cuantas horas pasan?")
+        let t = parseInt(ts)
+        let h = parseInt(hs)
+        let resultado=t+h;
+        while(resultado>=24){
+            resultado -= 24;
+        }
+        document.write("Son las " + t + " y en " + h + " horas serán las " + resultado);
+    </script>
+</body>
+</html>
