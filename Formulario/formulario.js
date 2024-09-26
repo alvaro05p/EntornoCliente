@@ -87,7 +87,9 @@ emailInput.addEventListener("blur", function() {
     
     let correo = emailInput.value
     if(!comprobarCorreo(correo)){
-        alerta(correo)
+        alerta(correo, emailInput)
+    }else{
+        resetear(emailInput)
     }
 
 });
@@ -96,7 +98,9 @@ dniInput.addEventListener("blur", function() {
     
     let dni = dniInput.value
     if(!comprobarDni(dni)){
-        alerta(dni)
+        alerta(dni, dniInput)
+    }else{
+        resetear(dniInput)
     }
 
 });
@@ -105,7 +109,9 @@ ipInput.addEventListener("blur", function() {
     
     let ip = ipInput.value
     if(!comprobarIP(ip)){
-        alerta(ip)
+        alerta(ip, ipInput)
+    }else{
+        resetear(ipInput)
     }
 
 });
@@ -114,15 +120,38 @@ repassInput.addEventListener("blur", function() {
     
     let password = passInput.value
     let repassword = repassInput.value
+
     if(!comprobarPassword(password,repassword)){
-        alerta(password)
+        alerta(password,passInput)
+    }else{
+        resetear(passInput)
     }
 
 });
 
+function resetear(input){
 
+    const alertaExistente = document.getElementById("alerta");
 
-function alerta(elemento) {
+    alertaExistente.remove();
+
+    input.style.borderColor = ""
+    
+}
+
+function alerta(elemento,input) {
+
+    const alertaExistente = document.getElementById("alerta");
+
+    if(elemento === ""){
+        input.style.borderColor = ""
+        alertaExistente.remove()
+        return
+    }
+
+    if (alertaExistente) {
+        alertaExistente.remove();
+    }
 
     let alertas = document.getElementById("alertas")
     // Crear un nuevo elemento <h2> para la alerta
@@ -134,6 +163,8 @@ function alerta(elemento) {
     // Añadir un id para poder identificarlo luego
     alerta.id = "alerta";
 
-    alertas.appendChild(alerta);
+    alertas.appendChild(alerta)
+
+    input.style.borderColor = "red"
 
 }
