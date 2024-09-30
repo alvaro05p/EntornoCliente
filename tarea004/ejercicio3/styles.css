@@ -1,0 +1,25 @@
+form{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    max-width: 50%;
+}
+
+form input{
+    margin-bottom: 10px;
+}
+
+button{
+    margin-top: 10px;
+}
+
+.respuesta{
+    display: flex;
+}
+
+.lista{
+    border: 1px solid black;
+    width: 25%;
+    height: 25%;
+    padding: 10px;
+}
