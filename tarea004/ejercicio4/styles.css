@@ -1,0 +1,47 @@
+form{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    max-width: 50%;
+}
+
+form input{
+    margin-bottom: 10px;
+}
+
+button{
+    margin-top: 10px;
+}
+
+/* Estilo general para el contenedor principal */
+.respuesta {
+    display: flex;           /* Usar flexbox para alinear los divs horizontalmente */
+    justify-content: space-around;  /* Espacio equitativo entre las listas */
+    padding: 20px;           /* Añadir un poco de espacio interno */
+    background-color: #f0f0f0; /* Color de fondo claro */
+}
+
+/* Estilo para cada una de las listas */
+.lista {
+    border: 1px solid #ccc;   /* Borde gris claro para cada lista */
+    border-radius: 8px;       /* Bordes redondeados */
+    padding: 15px;            /* Espacio interno */
+    background-color: #fff;   /* Fondo blanco */
+    width: 150px;             /* Ancho fijo para cada lista */
+    text-align: center;       /* Centrar el texto */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera para darle profundidad */
+}
+
+/* Estilo para los títulos (h3) dentro de cada lista */
+.lista h3 {
+    font-size: 18px;          /* Tamaño de fuente del título */
+    margin-bottom: 10px;      /* Espacio debajo del título */
+    color: #333;              /* Color de texto */
+}
+
+/* Efecto hover para las listas */
+.lista:hover {
+    background-color: #f7f7f7; /* Cambiar el fondo al pasar el ratón */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+    cursor: pointer;           /* Cambiar el cursor al pasar el ratón */
+}
