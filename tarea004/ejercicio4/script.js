@@ -1,11 +1,12 @@
 const boton = document.getElementById("boton")
-
 const nombre = document.getElementById("nombre")
 const email = document.getElementById("email")
 const dni = document.getElementById("dni")
 const respuesta = document.getElementById("respuesta")
 const lista1 = document.getElementById("lista1")
 const lista2 = document.getElementById("lista2")
+const lista3 = document.getElementById("lista3")
+const lista4 = document.getElementById("lista4")
 const select = document.getElementById("select")
 
 boton.addEventListener('click', function(event){
@@ -27,15 +28,54 @@ boton.addEventListener('click', function(event){
 
     parrafo.appendChild(texto)
 
-    if(selectValor == "lista1"){
+    switch(selectValor){
 
-        lista1.appendChild(parrafo)
-
-    }else{
-
-        lista2.appendChild(parrafo)
+        case "lista1":
+            lista1.appendChild(parrafo)
+            exit
+        case "lista2":
+            lista2.appendChild(parrafo)
+            exit
+        case "lista3":
+            lista3.appendChild(parrafo)
+            exit
+        case "lista4":
+            lista4.appendChild(parrafo)
+            exit
 
     }
 
+    parrafo.addEventListener('dblclick', function() {
+        
+        switch(selectValor){
+
+            case "lista1":
+                lista1.appendChild(parrafo)
+                exit
+            case "lista2":
+                lista2.appendChild(parrafo)
+                exit
+            case "lista3":
+                lista3.appendChild(parrafo)
+                exit
+            case "lista4":
+                lista4.appendChild(parrafo)
+                exit
+    
+        }
+        
+    })
+
+   
+
 })
+
+
+
+
+
+
+
+
+
 
