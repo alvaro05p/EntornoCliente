@@ -8,8 +8,11 @@ const lista2 = document.getElementById("lista2")
 const lista3 = document.getElementById("lista3")
 const lista4 = document.getElementById("lista4")
 const select = document.getElementById("select")
+let guardarTexto
 
-boton.addEventListener('click', function(event){
+boton.addEventListener("click", meterEnLista)
+
+function meterEnLista(event){
 
     //Prevent default para que no se recargue la pagina
     event.preventDefault()
@@ -24,6 +27,8 @@ boton.addEventListener('click', function(event){
 
     var parrafo = document.createElement("p")
 
+    parrafo.addEventListener("dblclick", () => mover(parrafo))
+
     var texto = document.createTextNode(nombreValor + " con DNI " + dniValor + " e EMAIL " + emailValor)
 
     parrafo.appendChild(texto)
@@ -32,43 +37,46 @@ boton.addEventListener('click', function(event){
 
         case "lista1":
             lista1.appendChild(parrafo)
-            exit
+            break
         case "lista2":
             lista2.appendChild(parrafo)
-            exit
+            break
         case "lista3":
             lista3.appendChild(parrafo)
-            exit
+            break
         case "lista4":
             lista4.appendChild(parrafo)
-            exit
+            break
 
     }
 
-    parrafo.addEventListener('dblclick', function() {
-        
-        switch(selectValor){
+}
 
-            case "lista1":
-                lista1.appendChild(parrafo)
-                exit
-            case "lista2":
-                lista2.appendChild(parrafo)
-                exit
-            case "lista3":
-                lista3.appendChild(parrafo)
-                exit
-            case "lista4":
-                lista4.appendChild(parrafo)
-                exit
-    
-        }
-        
-    })
+function mover(parrafo){
+
+    let selectValor = select.value
+
+    switch(selectValor){
+
+        case "lista1":
+            lista1.appendChild(parrafo)
+            break
+        case "lista2":
+            lista2.appendChild(parrafo)
+            break
+        case "lista3":
+            lista3.appendChild(parrafo)
+            break
+        case "lista4":
+            lista4.appendChild(parrafo)
+            break
+
+    }
+}
 
    
 
-})
+
 
 
 
