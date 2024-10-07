@@ -1,0 +1,74 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("../universo.jpeg");
+    background-size: cover;
+}
+
+.caja-superior {
+    background-color: #fff;
+    border: 2px solid blue;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    width: 100px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.numero-superior {
+    font-size: 30px;
+    color: blue;
+    width: 70px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between; 
+    width: 60%;
+}
+
+.columna {
+    width: 45%; 
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2); 
+    border-radius: 15px;
+}
+
+.izquierda {
+    background-color: blue;
+}
+
+.derecha {
+    background-color: #333;
+}
+
+.numero {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin: 10px 0;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.numeroAmarillo {
+    transform: scale(2); 
+    color: yellow;
+}
+

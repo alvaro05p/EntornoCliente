@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proteger Correo</title>
+</head>
+<body>
+    <script>
+        let original = prompt("Correo electrónico: ")
+        let partes = original.split("@")
+
+        //Sustituye la segunda mitad de antes de la @ por *
+        let largo = partes[0].length / 2
+        let restante = partes[0].length - largo
+        let protegido = partes[0].substring(0,largo)
+        for(let i=0; i<restante; i++){
+            protegido+="*"
+        }
+        protegido+="@"
+        protegido+=partes[1]
+        document.write(protegido)
+        
+    </script>
+</body>
+</html>

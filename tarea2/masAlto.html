@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mas alto</title>
+</head>
+<body>
+    <script>
+        let cuantosNumeros = prompt("Cuantos numeros? ")
+        let nNumeros = parseInt(cuantosNumeros)
+        let max = 0;
+        for(let i=0;i<nNumeros;i++){
+            let actual = i+1
+            numero = prompt("Numero " + actual + ":")
+            if(numero > max){
+            max = numero
+            }
+        }
+
+        document.write("El numero mas alto es: " + max)
+    </script>
+</body>
+</html>

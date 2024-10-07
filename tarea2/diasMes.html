@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dias Mes</title>
+    <script>
+        //Escribir una función que devuelva el número de días que tiene un mes indicado. Le pasaremos como argumento el número de mes y el número de año.
+
+        let argumentos = prompt("mes,año")
+
+        let separado = argumentos.split(",")
+
+        let mes = parseInt(separado[0])
+        let yr = parseInt(separado[1])
+
+        let fecha = new Date()
+        
+        //Comprobamos si el año es bisiesto
+        function esBisiesto(yr){
+
+            if(yr % 4 === 0){
+                return true
+            }else{
+                return false
+            }
+
+        }
+
+        //Segun los meses indicados sabremos los dias que tienen
+        switch(mes){
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                document.write("31 dias")
+                break
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                document.write("30 dias")
+                break
+            case 2:
+                if(!esBisiesto(yr)){
+                    document.write("28 dias")
+                }else{
+                    document.write("29 dias")
+                }
+                break
+        }
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

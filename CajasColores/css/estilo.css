@@ -1,0 +1,43 @@
+* {
+    transition: all .5s;
+}
+#contenedor {
+    display:flex;
+    flex-direction: row;
+}
+.contenedorPadre {
+    display: flex;
+    flex-direction: column;
+}
+.sombra {
+    box-shadow:5px 5px 15px grey;
+}
+.caja {
+    width:300px;
+    height:300px;
+    border:1px solid black;
+    margin:5px;
+}
+.rojo {
+    background-color:red;
+}
+.verde {
+    background-color:green;
+}
+.azul {
+    background-color:blue;
+}
+.negro {
+    background-color:black;
+}
+button {
+    margin:auto;
+    padding:5px;
+}
+.circulo {
+    border-radius: 50%;
+}
+.sombraInt {
+    box-shadow:inset 5px 5px 15px black;
+    border-radius: 50%;
+}

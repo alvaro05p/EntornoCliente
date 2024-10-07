@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        let num = 0
+        let number = ""
+        let contador2=0
+
+        function esFeliz(numero){
+
+            let resultado
+            let potencias = []  
+            let arrayNumeros = numero.split("")
+            let contador=0
+            let detector
+            
+            while(contador < 8){
+            
+                resultado = 0
+                potencias = []
+
+                //Pasamos el array de strings a un array de numeros
+                for(let i=0;i<arrayNumeros.length;i++){
+                    arrayNumeros[i]=parseInt(arrayNumeros[i])
+                }
+
+                //Elevamos a 2 cada uno de los numeros de array y lo sumamos
+                for(let i=0;i<arrayNumeros.length;i++){
+                    potencias[i] = Math.pow(arrayNumeros[i], 2)
+                    resultado += potencias[i]
+                }
+
+                numero = resultado.toString()
+                if(numero === "1"){
+                    return true
+
+                }
+                arrayNumeros = numero.split("")
+
+                contador++
+
+            }
+        
+            return false
+            
+        }
+
+
+
+
+        while(contador2 < 5){
+            number = num.toString()
+            
+            
+            if(esFeliz(number)){
+                document.write(num)
+                document.write(" ")
+                contador2++
+            }
+
+            num++
+
+        }
+        
+        
+    </script>
+</body>
+</html>

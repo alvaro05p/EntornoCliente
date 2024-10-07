@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        let fecha = prompt("Fecha:")
+
+        let objeto = new Date(fecha)
+
+        function objetoDate(fecha){
+            return fecha instanceof Date && !isNaN(fecha)
+        }
+
+        if(objetoDate(objeto)){
+            document.write("Es tipo date")
+        }else{
+            document.write("No es tipo date")
+        }
+
+        
+    </script>
+</body>
+</html>

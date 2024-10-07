@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraer</title>
+</head>
+<body>
+    <script>
+        let ejemplo = prompt('Ejemplo: Cristiano Ronaldo Apesta, 4, fin')
+        let partes = ejemplo.split(",")
+
+        let string = partes[0]
+        let num = parseInt(partes[1])
+        let posicion = partes[2].replace(" ","")
+
+        
+        let resultado = ""
+
+        
+
+        if(posicion == 'ini'){
+
+            resultado = string.substring(0,num)
+
+        }else if(posicion == 'fin'){
+
+            num = num*-1
+            resultado = string.slice(num)
+
+        }
+
+        document.write(resultado)
+
+    </script>
+</body>
+</html>
