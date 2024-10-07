@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>calculadora</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="calculadora.css" />
+    </head>
+    <body>
+        <div id="contenedor">
+            <div class="pantalla">
+                <input type="text" id="pantallaInput" maxlength="13" value="0" disabled>
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)">
+                C
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)">
+                %
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)">
+                &laquo;
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)">
+                /
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)" onclick="introducir(this)">
+                7
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)" onclick="introducir(this)">
+                8
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)" onclick="introducir(this)">
+                9
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)" onclick="introducir(this)">
+                x
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)" onclick="introducir(this)">
+                4
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)" onclick="introducir(this)">
+                5
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)" onclick="introducir(this)">
+                6
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)" >
+                -
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)" onclick="introducir(this)">
+                1
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)" onclick="introducir(this)">
+                2
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)" onclick="introducir(this)">
+                3
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)">
+                +
+            </div>
+            <div class="boton infIzq" onmousedown="apretar(this)" onmouseup="apretar(this)" onclick="introducir(this)">
+                0
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)">
+                .
+            </div>
+            <div class="boton" onmousedown="apretar(this)" onmouseup="apretar(this)">
+                ()
+            </div>
+            <div class="boton infDer" onmousedown="apretar(this)" onmouseup="apretar(this)">
+                =
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <script src="calculadora.js"></script>
+    </body>
+</html>
