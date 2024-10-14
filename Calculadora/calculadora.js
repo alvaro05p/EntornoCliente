@@ -43,6 +43,11 @@ function igual(){
     pantalla.value = mostrar;
 }
 
+function parentesis(){
+    mostrar = "(" + mostrar + ")";
+    pantalla.value=mostrar;
+}
+
 document.addEventListener('keydown', function(event) {
     console.log(event.key);
     if(teclasCalculadora.includes(event.key)){
