@@ -39,7 +39,14 @@ function borrar(){
 
 function igual(){
     mostrar = mostrar.replace("x", "*");
-    mostrar = eval(mostrar);
+    if(mostrar[mostrar.length-1] != "%"){
+        mostrar = eval(mostrar);
+    }else if(mostrar[mostrar.length-1] == "%"){
+        console.log(mostrar);
+        mostrar = mostrar.replace("%" , "");
+        let partes = mostrar.split("*");
+        mostrar = (partes[0] * partes[1]) / 100
+    }
     pantalla.value = mostrar;
 }
 
