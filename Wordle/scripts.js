@@ -3,15 +3,26 @@ let colActual = 0;
 
 seleccionada();
 
+let palabras = ["CIELO", "NOCHE", "FRUTA", "LLAMA", "FLOTA", "FUEGO", "LLAVE", "HOJAS", "GENTE", "FELIZ"];
+
+let palabra = palabras[Math.floor(Math.random() * 10) + 1]
+
+console.log(palabra);
+
+let escrito="";
+
 document.querySelectorAll(".key").forEach(function(button){
     button.addEventListener("click",function(){
         let valor = button.textContent.trim();
-
+    
         if(valor != "DEL" && valor != "ENTER"){
+            escrito+=valor;
+            console.log(escrito);
             recopilar(valor);
         }else if(valor === "DEL"){
             del();
         }else if(valor === "ENTER" && colActual===5){
+            validar(escrito);
             enter();
         }
     });
@@ -60,6 +71,12 @@ function del(){
         let columnaSel=columnas[colActual];
         columnaSel.textContent = "";
     }
+
+    if(escrito.length > 0){
+        escrito = escrito.slice(0,-1);
+        console.log(escrito);
+    }
+    
     
 }
 
@@ -67,6 +84,7 @@ function enter(){
     filaActual++;
     colActual=0;
     seleccionada();
+    escrito = "";
 
 }
 
@@ -80,15 +98,34 @@ function seleccionada(){
     //Todas las columnas de fila
     let columnas = filaSel.getElementsByClassName("cell");
 
+    //Le añadimos a cada columna de la fila actual una clase con un borde azúl 
     for (let i = 0; i < columnas.length; i++) {
         columnas[i].classList.toggle("selec");  
     }
 
-    if (colActual > 0) {
-        let prevCol = filaSel.getElementsByClassName("cell")[colActual - 1];
-        prevCol.classList.toggle("selec");
-    }
+}
 
+function validar(escrito){
+    
+    //Filas
+    let filas = document.getElementsByClassName("row");
+
+    let filaSel=filas[filaActual];
+
+    //Todas las columnas de fila
+    let columnas = filaSel.getElementsByClassName("cell");
+
+    //Recorremos lo que tememos escrito comparandolo con la palabra 
+    for (let i = 0; i < columnas.length; i++) {
+        console.log(escrito[i]);
+        
+        if(columnas[i].textContent === palabra[i]){
+            columnas[i].classList.add("verde");
+        }else if(palabra.includes(escrito[i])){
+            columnas[i].classList.add("naranja");
+        }
+    }
+    
 }
 
 

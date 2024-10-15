@@ -31,6 +31,7 @@ body{
     align-items: center;
     font-size: 24px;
     text-transform: uppercase;
+    border-radius: 5px;
 }
 
 .keyboard {
@@ -63,4 +64,12 @@ body{
 
 .selec{
     border-color: rgb(46, 176, 219);
+}
+
+.verde{
+    border-color: rgb(101, 231, 101);
+}
+
+.naranja{
+    border-color: rgb(235, 121, 76);
 }
