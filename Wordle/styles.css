@@ -60,3 +60,7 @@ body{
 .big{
     width: 80px;
 }
+
+.selec{
+    border-color: rgb(46, 176, 219);
+}
