@@ -3,7 +3,20 @@ let colActual = 0;
 
 seleccionada();
 
-let palabras = ["CIELO", "NOCHE", "FRUTA", "LLAMA", "FLOTA", "FUEGO", "LLAVE", "HOJAS", "GENTE", "FELIZ"];
+let palabras = [
+    "CIELO", "NOCHE", "FRUTA", "LLAMA", "FLOTA", "FUEGO", "LLAVE", "HOJAS", "GENTE", "FELIZ",
+    "ARBOL", "AVION", "BALON", "BARCO", "BOLSA", "BURRO", "CABRA", "CAMPO", "CARTA", "CASAS",
+    "CIEGA", "COCHE", "CORAL", "CORTE", "DEDOS", "DIOSA", "DULCE", "ESCAR", "ESFER", "FLOJO",
+    "FLORA", "GRITO", "HABLA", "HORNO", "JUEGO", "JOVEN", "LAGOS", "LARGO", "LIBRO", "LUCHA",
+    "LUNES", "MANOS", "MENTA", "MESA", "METAL", "MONTA", "NACER", "NIEVE", "NIÑOS", "ORCAS",
+    "OVEJA", "OZONO", "PAJAR", "PAPEL", "PECES", "PERRO", "PIANO", "PIEZA", "PLUMA", "POLLO",
+    "PUROS", "QUESO", "RAYOS", "RISAS", "ROBOT", "RUEDA", "SABIO", "SELVA", "SOLAR", "SUELO",
+    "TANGO", "TELAS", "TIEMO", "TIJER", "TIGRE", "TOMAR", "TORRE", "UÑAS", "VALLE", "VELAS",
+    "VIAJE", "VIBRA", "VIDAS", "VIUDA", "YERBA", "ZORRO", "ZURDO", "SABOR", "CLIMA", "BRISA",
+    "PLATO", "CABLE", "MOTOR", "ESPEJ", "HOJAS", "ALMAS", "PINTA", "TARTA", "ZONAS", "BANDA"
+];
+
+
 let palabra = palabras[Math.floor(Math.random() * palabras.length)];
 
 console.log(palabra);
@@ -27,6 +40,25 @@ document.querySelectorAll(".key").forEach(function(button) {
             enter();
         }
     });
+});
+
+document.addEventListener("keydown", function(event) {
+    let key = event.key.toUpperCase();  // Capturamos la tecla en mayúsculas
+    console.log(key);
+    let valor = key;
+
+        if (/^[A-Z]$/.test(key)) {
+            if (colActual < 5) {
+                escrito += valor;
+                console.log(escrito);
+                recopilar(valor);
+            }
+        } else if (valor === "BACKSPACE") {
+            del();
+        } else if (valor === "ENTER" && colActual === 5) {
+            validar(escrito);
+            enter();
+        }
 });
 
 function recopilar(valor) {
@@ -65,12 +97,12 @@ function enter() {
         seleccionada();
         escrito = "";
     }
+
 }
 
 function seleccionada() {
     let filas = document.getElementsByClassName("row");
 
-    // Asegúrate de que todas las filas anteriores pierdan la clase 'selec'
     for (let i = 0; i < filas.length; i++) {
         let columnas = filas[i].getElementsByClassName("cell");
         for (let j = 0; j < columnas.length; j++) {
@@ -91,9 +123,10 @@ function validar(escrito) {
     let filas = document.getElementsByClassName("row");
     let filaSel = filas[filaActual];
     let columnas = filaSel.getElementsByClassName("cell");
-
+    console.log(filaSel);
     // Recorremos lo que tenemos escrito comparándolo con la palabra
     for (let i = 0; i < columnas.length; i++) {
+
         if (escrito[i] === palabra[i]) {
             columnas[i].classList.add("verde");
         } else if (palabra.includes(escrito[i])) {
@@ -101,13 +134,13 @@ function validar(escrito) {
         }
     }
 
+    let teclado = document.getElementById("keyboard");
+
     if (escrito === palabra) {
         for (let i = 0; i < columnas.length; i++) {
             columnas[i].classList.add("verde");
         }
 
-        let teclado = document.getElementById("keyboard");
-        let original = teclado.innerHTML;
         teclado.innerHTML = "";
         teclado.textContent = "¡Perfecto!";
 
@@ -121,38 +154,32 @@ function validar(escrito) {
         boton.classList.add("boton");
 
         boton.addEventListener("click", function() {
-            palabra = palabras[Math.floor(Math.random() * palabras.length)];
-            escrito = "";
-            colActual = 0;
-            filaActual = 0;
-            teclado.innerHTML = original;
-            teclado.classList.add("keyboard");
-            teclado.classList.remove("victoria");
+            
             reiniciar();
         });
+    }else if(filaActual == 5){
+        
+        teclado.innerHTML = "";
+        teclado.textContent = "Vaya, la palabra era " + palabra;
+/^[A-Z]$/.test(key)
+        let boton = document.createElement("button");
+        let textoBoton = document.createTextNode("¿Otra palabra?");
+        boton.appendChild(textoBoton);
+        teclado.appendChild(boton);
+
+        teclado.classList.remove("keyboard");
+        teclado.classList.add("derrota");
+        boton.classList.add("boton");
+        boton.addEventListener("click", function() {
+            
+            reiniciar();
+        });
+
     }
 }
 
 function reiniciar() {
-    // Filas
-    let filas = document.getElementsByClassName("row");
-
-    // Limpiar todo el tablero, quitando colores y textos
-    for (let i = 0; i < filas.length; i++) {
-        let columnas = filas[i].getElementsByClassName("cell");
-        for (let j = 0; j < columnas.length; j++) {
-            columnas[j].classList.remove("verde", "naranja", "selec");
-            columnas[j].textContent = "";  // Limpiar el contenido de texto
-        }
-    }
-    tablero=document.getElementById("board");
-
-    tablero.innerHTML = ""
-    // Restablecer las variables globales
-    filaActual = 0;
-    colActual = 0;
-    escrito = "";
-
-    // Resaltar la primera fila para comenzar de nuevo
-    seleccionada();
+    location.reload();
 }
+
+
