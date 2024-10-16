@@ -73,3 +73,19 @@ body{
 .naranja{
     border-color: rgb(235, 121, 76);
 }
+
+.victoria{
+    font-size: 400%;
+    font-weight: 700;
+    color: rgb(99, 224, 99);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.boton{
+    background-color: rgb(36, 36, 36);
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+}
