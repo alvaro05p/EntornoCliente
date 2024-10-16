@@ -102,3 +102,19 @@ body{
     padding: 10px;
     gap: 10px;
 }
+
+
+.green-key{
+    border: 5px solid rgb(115, 219, 95);
+
+}
+
+.orange-key{
+    border: 5px solid rgb(228, 162, 87);
+
+}
+
+.grey-key{
+    background-color: gray;
+
+}
