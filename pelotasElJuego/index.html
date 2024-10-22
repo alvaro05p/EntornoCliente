@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulsar Pelotas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pulsar las pelotas (El juego)</h1>
+            <b class="time" id="mins">00</b>:<b class="time" id="secs">00</b>:<b class="time" id="millisecs">00</b>
+            <div id="contador">
+                <div id="correctas">0</div>
+                <div id="incorrectas">0</div>
+            </div>
+            
+        </header>
+        <div id="area_juego">
+            <p>Selecciona el número de pelotas</p>
+            <select id="numPelotas" >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+
+            <p>Elige el modo</p>
+
+            <div class="modos">
+                <p id="todas" class="modo">Eliminar todas las pelotas</p>
+                <p id="color" class="modo">Eliminar un solo color</p>
+            </div>
+            <button id="jugar">Jugar</button>
+
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
