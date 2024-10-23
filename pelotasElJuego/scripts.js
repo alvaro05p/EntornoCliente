@@ -1,6 +1,8 @@
 let jugar = document.getElementById("jugar");
 let selectPelotas = document.getElementById("numPelotas");
 let valorSelect;
+let correctas = document.getElementById("correctas");
+contador = 0;
 
 selectPelotas.addEventListener("change", function(){
 
@@ -17,7 +19,7 @@ jugar.addEventListener("click", function(){
     for(let i=0;i<valorSelect;i++){
         
         let size = (Math.random() * 50) + 10;
-        let altura = Math.random() * 500;
+        let altura = Math.random() * 435;
         let horizontal = Math.random() * 1100;
         let colorNum = Math.floor((Math.random() * 2) + 1);
         let color;
@@ -41,8 +43,13 @@ jugar.addEventListener("click", function(){
         circulo.style.left = horizontal + "px";
         circulo.style.top = altura + "px";
         areaJuego.appendChild(circulo);
+
+        circulo.addEventListener("click", function(){
+            circulo.remove();
+            contador++;
+            correctas.textContent = contador;
+            
+        })
     }
     
-    
-
 })

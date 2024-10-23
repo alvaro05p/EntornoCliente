@@ -1,6 +1,21 @@
+* {
+    margin: 0; /* Elimina márgenes de todos los elementos */
+    padding: 0; /* Elimina padding de todos los elementos */
+    box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el ancho y alto total */
+}
+
+html,body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 .container{
     text-align: center;
     height: 100%;
+    background-color: grey;
+    padding: 0;
+    margin: 0;
 }
 
 #contador{
@@ -51,7 +66,8 @@
 
 #area_juego{
     background-color: antiquewhite;
-    height: 600px;
-    width: 1200px;
+    height: 550px;
+    width: 100%;
     position: relative;
+    margin-bottom: 0px;
 }
