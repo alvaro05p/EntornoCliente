@@ -14,10 +14,14 @@ let colorButton = document.getElementById("color");
 
 todasButton.addEventListener("click", function(){
     modo = "todas";
+    todasButton.classList.add("pulsado");
+    colorButton.classList.remove("pulsado");
 })
 
 colorButton.addEventListener("click", function(){
     modo = "color";
+    colorButton.classList.add("pulsado");
+    todasButton.classList.remove("pulsado");
 })
 
 
@@ -38,29 +42,53 @@ function randoms(){
     return { size, altura, horizontal, colorNum };
 }
 
+function getColorPrincipal(){
+    let colorPrincipal = Math.floor((Math.random() * 4) + 1);
+    switch(colorPrincipal){
+        case 1:
+            color = "lightblue";  // Azul 
+            break;
+        case 2:
+            color = "lightcoral";  // Rojo 
+            break;
+        case 3:
+            color = "lightgreen";  // Verde 
+            break;
+        case 4:
+            color = "lightpink";  // Amarillo 
+            break;
+    }
+    
+    return color;
+}
+
 //Colores aleatorios para las pelotas
 function randomColor(colorNum){
     switch(colorNum){
         case 1:
-            color = "blue";
-            //index = "1";
-            break;
+        color = "lightblue";  // Azul 
+        //index = "1";
+        break;
         case 2:
-            color = "red";
+            color = "lightcoral";  // Rojo 
             break;
         case 3:
-            color = "green";
+            color = "lightgreen";  // Verde 
             break;
         case 4:
-            color = "yellow";
+            color = "lightpink";  // Amarillo 
             break;
-    }
+        }
 
     return color;
 }
 
 
 jugar.addEventListener("click", function(){
+
+    let objetivo = getColorPrincipal();
+
+    alert(objetivo);
 
     let areaJuego = document.getElementById("area_juego");
 
@@ -69,11 +97,10 @@ jugar.addEventListener("click", function(){
     for(let i=0;i<valorSelect;i++){
 
         let {size, altura, horizontal, colorNum } = randoms();
+        
         let color = randomColor(colorNum);
 
         let circulo = document.createElement("div");
-
-        console.log(color);
 
         //Se asignan
         circulo.style.backgroundColor = color;
@@ -84,24 +111,47 @@ jugar.addEventListener("click", function(){
         circulo.style.position = "absolute";
         circulo.style.left = horizontal + "px";
         circulo.style.top = altura + "px";
-        //circulo.style.zIndex = index;
+        circulo.style.border = "1px solid black";
+        
         areaJuego.appendChild(circulo);
 
-        //Sumamos al contador indicado
-        circulo.addEventListener("click", function(){
+        if(modo == "todas"){
+        
+            //Sumamos al contador indicado
+            circulo.addEventListener("click", function(){
             
-
-            if(circulo.style.backgroundColor == "blue"){
                 contador++;
                 correctas.textContent = contador;
-            }else{
-                contador2++;
-                incorrectas.textContent = contador2;
+            
+                circulo.remove();
+                
+            })
+        }else if(modo == "color"){
+
+            if(circulo.color == objetivo){
+                circulo.style.zIndex = 1;
             }
 
-            circulo.remove();
-            
-        })
+            circulo.addEventListener("click", function(){
+
+                if(circulo.style.backgroundColor == objetivo){
+                    contador++;
+                    correctas.textContent = contador;
+                }else{
+                    contador2++;
+                    incorrectas.textContent = contador2;
+                }
+
+                circulo.remove();
+
+            })
+
+
+        }
+
+        
     }
+
+    
     
 })
