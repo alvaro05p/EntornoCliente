@@ -49,7 +49,7 @@ function getColorPrincipal(){
             color = "lightblue";  // Azul 
             break;
         case 2:
-            color = "lightcoral";  // Rojo 
+            color = "lightgoldenrodyellow";  // Rojo 
             break;
         case 3:
             color = "lightgreen";  // Verde 
@@ -66,11 +66,10 @@ function getColorPrincipal(){
 function randomColor(colorNum){
     switch(colorNum){
         case 1:
-        color = "lightblue";  // Azul 
-        //index = "1";
-        break;
+            color = "lightblue";  // Azul 
+            break;
         case 2:
-            color = "lightcoral";  // Rojo 
+            color = "lightgoldenrodyellow";  // Rojo 
             break;
         case 3:
             color = "lightgreen";  // Verde 
@@ -86,9 +85,22 @@ function randomColor(colorNum){
 
 jugar.addEventListener("click", function(){
 
-    let objetivo = getColorPrincipal();
+    if(modo == "todas"){
+        let contadorPuntos = document.getElementById("contador");
+        contadorPuntos.innerHTML = "";
+        
+    }
 
-    alert(objetivo);
+    if(modo == "color"){
+        let contadorPuntos = document.getElementById("contador");
+        infObjetivo = document.createElement("p");
+        infObjetivo.textContent = toString(color);
+        infObjetivo.color = color;
+        contadorPuntos.appendChild(infObjetivo);
+        
+    }
+
+    let objetivo = getColorPrincipal();
 
     let areaJuego = document.getElementById("area_juego");
 
@@ -121,7 +133,7 @@ jugar.addEventListener("click", function(){
             circulo.addEventListener("click", function(){
             
                 contador++;
-                correctas.textContent = contador;
+                correctas.textContent = getColorPrincipal();
             
                 circulo.remove();
                 
