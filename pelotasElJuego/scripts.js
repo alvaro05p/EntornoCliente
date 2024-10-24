@@ -6,6 +6,12 @@ let incorrectas = document.getElementById("incorrectas");
 let contador = 0;
 let contador2 = 0;
 
+let minsElem = document.getElementById("mins");
+let secsElem = document.getElementById("secs");
+let millisecsElem = document.getElementById("millisecs");
+let interval; // Intervalo del cronómetro
+let startTime; // Para calcular el tiempo transcurrido
+
 //Elegir el modo de juego
 let modo;
 
@@ -82,31 +88,81 @@ function randomColor(colorNum){
     return color;
 }
 
+function finPartida(areaJuego){
+    areaJuego.innerHTML = "";
+    let containerReload = document.createElement("div");
+    let victoria = document.createElement("h1");
+    victoria.classList.add("victoria");
+    victoria.textContent = "Well done!";
+    areaJuego.appendChild(victoria);
+    clearInterval(interval);
+
+    let reiniciar = document.createElement("button");
+    reiniciar.classList.add("reiniciar");
+    reiniciar.textContent = "Reiniciar";
+    reiniciar.addEventListener("click", function(){
+        location.reload();
+    })
+
+    containerReload.appendChild(reiniciar);
+    containerReload.appendChild(victoria);
+    containerReload.classList.add("reiniciar");
+    areaJuego.appendChild(containerReload);
+
+}
+
+function startCronometro() {
+    //Guardamos el tiempo de inicio del cronometro
+    startTime = Date.now();
+    interval = setInterval(function() {
+        let elapsedTime = Date.now() - startTime;
+
+        let minutes = Math.floor(elapsedTime / (1000 * 60));
+        let seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+        let milliseconds = Math.floor(elapsedTime % 1000);
+
+        //El método padStart sirver para meter ceros delante del número si es necesario, para que siempre mantenga el formato
+        minsElem.textContent = String(minutes).padStart(2, '0');
+        secsElem.textContent = String(seconds).padStart(2, '0');
+        millisecsElem.textContent = String(milliseconds).padStart(3, '0');
+
+        //Se actuliza cada 10 ms
+
+    }, 10); 
+}
 
 jugar.addEventListener("click", function(){
 
     if(modo == "todas"){
         let contadorPuntos = document.getElementById("contador");
         contadorPuntos.innerHTML = "";
-        
-    }
-
-    if(modo == "color"){
-        let contadorPuntos = document.getElementById("contador");
-        infObjetivo = document.createElement("p");
-        infObjetivo.textContent = toString(color);
-        infObjetivo.color = color;
-        contadorPuntos.appendChild(infObjetivo);
-        
     }
 
     let objetivo = getColorPrincipal();
+
+    if(modo == "color"){
+        let contadorPuntos = document.getElementById("contador");
+        let infObjetivo = document.createElement("p");
+        let color=objetivo;
+        infObjetivo.textContent = color;
+        infObjetivo.style.color = color;
+        infObjetivo.style.marginLeft = "10px";
+        contadorPuntos.appendChild(infObjetivo);
+    }
+
+    startCronometro();
 
     let areaJuego = document.getElementById("area_juego");
 
     areaJuego.innerHTML="";
 
-    for(let i=0;i<valorSelect;i++){
+    let totalPelotas = valorSelect * 8;
+
+    if (modo === "todas") {
+        totalPelotas = valorSelect; // En este modo, no necesitas multiplicar por 8
+    }
+
+    for(let i=0;i<totalPelotas;i++){
 
         let {size, altura, horizontal, colorNum } = randoms();
         
@@ -124,7 +180,12 @@ jugar.addEventListener("click", function(){
         circulo.style.left = horizontal + "px";
         circulo.style.top = altura + "px";
         circulo.style.border = "1px solid black";
-        
+        if (color === objetivo) {
+            circulo.style.zIndex = "10"; 
+        } else {
+            circulo.style.zIndex = "1"; 
+        }
+
         areaJuego.appendChild(circulo);
 
         if(modo == "todas"){
@@ -133,16 +194,18 @@ jugar.addEventListener("click", function(){
             circulo.addEventListener("click", function(){
             
                 contador++;
-                correctas.textContent = getColorPrincipal();
-            
                 circulo.remove();
+
+                console.log(correctas);
+                if(contador == valorSelect){
+                    finPartida(areaJuego);
+                }
                 
             })
-        }else if(modo == "color"){
 
-            if(circulo.color == objetivo){
-                circulo.style.zIndex = 1;
-            }
+            
+
+        }else if(modo == "color"){
 
             circulo.addEventListener("click", function(){
 
@@ -156,8 +219,12 @@ jugar.addEventListener("click", function(){
 
                 circulo.remove();
 
-            })
+                console.log(correctas);
+                if(contador == valorSelect){
+                    finPartida(areaJuego);
+                }
 
+            })
 
         }
 
@@ -165,5 +232,6 @@ jugar.addEventListener("click", function(){
     }
 
     
-    
+
+
 })
