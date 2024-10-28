@@ -41,8 +41,8 @@ selectPelotas.addEventListener("change", function(){
 //Se crean posiciones, tamaños y colores aleatorios
 function randoms(){
     let size = (Math.random() * 50) + 10;
-    let altura = Math.random() * 435;
-    let horizontal = Math.random() * 1100;
+    let altura = Math.random() * 575;
+    let horizontal = Math.random() * 1425;
     let colorNum = Math.floor((Math.random() * 4) + 1);
 
     return { size, altura, horizontal, colorNum };
@@ -133,105 +133,107 @@ function startCronometro() {
 
 jugar.addEventListener("click", function(){
 
-    if(modo == "todas"){
-        let contadorPuntos = document.getElementById("contador");
-        contadorPuntos.innerHTML = "";
-    }
-
-    let objetivo = getColorPrincipal();
-
-    if(modo == "color"){
-        let contadorPuntos = document.getElementById("contador");
-        let infObjetivo = document.createElement("p");
-        let color=objetivo;
-        infObjetivo.textContent = color;
-        infObjetivo.style.color = color;
-        infObjetivo.style.marginLeft = "10px";
-        contadorPuntos.appendChild(infObjetivo);
-    }
-
-    startCronometro();
-
-    let areaJuego = document.getElementById("area_juego");
-
-    areaJuego.innerHTML="";
-
-    let totalPelotas = valorSelect * 8;
-
-    if (modo === "todas") {
-        totalPelotas = valorSelect; // En este modo, no necesitas multiplicar por 8
-    }
-
-    for(let i=0;i<totalPelotas;i++){
-
-        let {size, altura, horizontal, colorNum } = randoms();
-        
-        let color = randomColor(colorNum);
-
-        let circulo = document.createElement("div");
-
-        //Se asignan
-        circulo.style.backgroundColor = color;
-        circulo.style.padding = size + "px";
-        circulo.style.width = "0px";
-        circulo.style.height = "0px";
-        circulo.style.borderRadius = "5000px";
-        circulo.style.position = "absolute";
-        circulo.style.left = horizontal + "px";
-        circulo.style.top = altura + "px";
-        circulo.style.border = "1px solid black";
-        if (color === objetivo) {
-            circulo.style.zIndex = "10"; 
-        } else {
-            circulo.style.zIndex = "1"; 
-        }
-
-        areaJuego.appendChild(circulo);
-
+    if(modo != undefined && valorSelect > 1){
+        console.log(modo);
         if(modo == "todas"){
-        
-            //Sumamos al contador indicado
-            circulo.addEventListener("click", function(){
-            
-                contador++;
-                circulo.remove();
-
-                console.log(correctas);
-                if(contador == valorSelect){
-                    finPartida(areaJuego);
-                }
-                
-            })
-
-            
-
-        }else if(modo == "color"){
-
-            circulo.addEventListener("click", function(){
-
-                if(circulo.style.backgroundColor == objetivo){
-                    contador++;
-                    correctas.textContent = contador;
-                }else{
-                    contador2++;
-                    incorrectas.textContent = contador2;
-                }
-
-                circulo.remove();
-
-                console.log(correctas);
-                if(contador == valorSelect){
-                    finPartida(areaJuego);
-                }
-
-            })
-
+            let contadorPuntos = document.getElementById("contador");
+            contadorPuntos.innerHTML = "";
         }
 
-        
-    }
+        let objetivo = getColorPrincipal();
 
-    
+        if(modo == "color"){
+            let contadorPuntos = document.getElementById("contador");
+            let infObjetivo = document.createElement("p");
+            let color=objetivo;
+            infObjetivo.textContent = color;
+            infObjetivo.style.color = color;
+            infObjetivo.style.marginLeft = "10px";
+            contadorPuntos.appendChild(infObjetivo);
+        }
+
+        startCronometro();
+
+        let areaJuego = document.getElementById("area_juego");
+
+        areaJuego.innerHTML="";
+
+        let totalPelotas = valorSelect * 8;
+
+        if (modo === "todas") {
+            totalPelotas = valorSelect; // En este modo, no necesitas multiplicar por 8
+        }
+
+        for(let i=0;i<totalPelotas;i++){
+
+            let {size, altura, horizontal, colorNum } = randoms();
+            
+            let color = randomColor(colorNum);
+
+            let circulo = document.createElement("div");
+
+            //Se asignan
+            circulo.style.backgroundColor = color;
+            circulo.style.padding = size + "px";
+            circulo.style.width = "0px";
+            circulo.style.height = "0px";
+            circulo.style.borderRadius = "5000px";
+            circulo.style.position = "absolute";
+            circulo.style.left = horizontal + "px";
+            circulo.style.top = altura + "px";
+            circulo.style.border = "1px solid black";
+            if (color === objetivo) {
+                circulo.style.zIndex = "10"; 
+            } else {
+                circulo.style.zIndex = "1"; 
+            }
+
+            areaJuego.appendChild(circulo);
+
+            if(modo == "todas"){
+            
+                //Sumamos al contador indicado
+                circulo.addEventListener("click", function(){
+                
+                    contador++;
+                    circulo.remove();
+
+                    console.log(correctas);
+                    if(contador == valorSelect){
+                        finPartida(areaJuego);
+                    }
+                    
+                })
+
+                
+
+            }else if(modo == "color"){
+
+                circulo.addEventListener("click", function(){
+
+                    if(circulo.style.backgroundColor == objetivo){
+                        contador++;
+                        correctas.textContent = contador;
+                    }else{
+                        contador2++;
+                        incorrectas.textContent = contador2;
+                    }
+
+                    circulo.remove();
+
+                    console.log(correctas);
+                    if(contador == valorSelect){
+                        finPartida(areaJuego);
+                    }
+
+                })
+
+            }
+
+            
+        }
+
+    }
 
 
 })
