@@ -20,42 +20,49 @@ window.onload = function(){
     cargarEventos();
 }
 
+let piedra;
+let papel;
+let tijera;
+let lagarto;
+let spock;
+
 function asignarElementosHTML() {
     //Función que utilizaremos para asignar los elementos HTML que vayamos a utilizar, a las varibales que hemos creado.
-    let piedra = document.getElementById("piedra");
-    let papel = document.getElementById("papel");
-    let tijera = document.getElementById("tijera");
-    let lagarto = document.getElementById("lagarto");
-    let spock = document.getElementById("spock");
-    let dropzone = document.getElementById('seleccionado');
+    piedra = document.getElementById("piedra");
+    papel = document.getElementById("papel");
+    tijera = document.getElementById("tijera");
+    lagarto = document.getElementById("lagarto");
+    spock = document.getElementById("spock");
+    dropzone = document.getElementById("seleccionado");
+
+    console.log("Elementos creados")
 }
 
 function cargarEventos() {
     //Función donde cargaremos los eventos que necesite cada elemento de la partida
-    
-    piedra.addEventListener('dragstart', dragStart);
-    papel.addEventListener('dragstart', dragStart);
-    tijera.addEventListener('dragstart', dragStart);
-    lagarto.addEventListener('dragstart', dragStart);
-    spock.addEventListener('dragstart', dragStart);
-    
-    dropzone.addEventListener('dragover', dragOver);
-    dropzone.addEventListener('drop', drop);
 
-    function dragStart(event) {
-        event.dataTransfer.setData('text/plain', event.target.id);
-    }
+    let items = document.querySelectorAll('.item');
 
-    function dragOver(event) {
+    items.forEach(item => {
+        item.addEventListener('dragstart', (event) => {
+            event.dataTransfer.setData('text/plain', event.target.id);
+            console.log("dragstart")
+        });
+    });
+
+    dropzone.addEventListener('dragover', (event) => {
         event.preventDefault();
-    }
+        console.log("dragover")
 
-    function drop(event) {
+    });
+
+    dropzone.addEventListener('drop', (event) => {
+        console.log("drop")
         event.preventDefault();
         const id = event.dataTransfer.getData('text/plain');
         const draggedElement = document.getElementById(id);
         dropzone.appendChild(draggedElement);
-    }
+    });
 }
 
 function continuar() {
