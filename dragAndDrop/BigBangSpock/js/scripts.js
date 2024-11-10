@@ -26,6 +26,9 @@ let tijera;
 let lagarto;
 let spock;
 
+let usuario;
+let bot = jugadaBot();
+
 function asignarElementosHTML() {
     //Función que utilizaremos para asignar los elementos HTML que vayamos a utilizar, a las varibales que hemos creado.
     piedra = document.getElementById("piedra");
@@ -35,12 +38,12 @@ function asignarElementosHTML() {
     spock = document.getElementById("spock");
     dropzone = document.getElementById("seleccionado");
 
-    console.log("Elementos creados")
+    console.log("Elementos creados");
 }
 
 function cargarEventos() {
-    //Función donde cargaremos los eventos que necesite cada elemento de la partida
 
+    //Función donde cargaremos los eventos que necesite cada elemento de la partida
     let items = document.querySelectorAll('.item');
 
     items.forEach(item => {
@@ -62,7 +65,10 @@ function cargarEventos() {
         const id = event.dataTransfer.getData('text/plain');
         const draggedElement = document.getElementById(id);
         dropzone.appendChild(draggedElement);
+        usuario = id;
+        deliverar();
     });
+
 }
 
 function continuar() {
@@ -77,15 +83,50 @@ function continuar() {
     cargarTablero();
 }
 
+function jugadaBot(){
+    let elementos = ["piedra",  "papel",  "tijera",  "lagarto",  "spock"];
+    let bot = elementos[Math.floor(Math.random() * 5)];
+
+    return bot;
+}
+
 function deliverar() {
-    document.getElementById("proteccion").className="visible";
-    document.getElementById("deliveracion").className="visible";
+    document.getElementById("proteccion").className="";
+    document.getElementById("deliveracion").className="";
     setTimeout(mostrarMensaje,2000);
 }
 
 function mostrarMensaje() {
     //Mostramos el mensaje en función del resultado de la jugada o de la partida
+    let veredicto = document.getElementById("veredicto");
+    let arrayVeredicto = [];
+    arrayVeredicto.push(usuario);
+    arrayVeredicto.push(bot);
+    if(arrayVeredicto.includes("tijeras") && arrayVeredicto.includes("papel")){
+        veredicto.textContent = mensajes["tipa"];
+    }else if(arrayVeredicto.includes("papel") && arrayVeredicto.includes("piedra")){
+        veredicto.textContent = mensajes["papi"];
+    }else if(arrayVeredicto.includes("piedra") && arrayVeredicto.includes("lagarto")){
+        veredicto.textContent = mensajes["pila"];
+    }else if(arrayVeredicto.includes("lagarto") && arrayVeredicto.includes("spock")){
+        veredicto.textContent = mensajes["lasp"];
+    }else if(arrayVeredicto.includes("spock") && arrayVeredicto.includes("tijeras")){
+        veredicto.textContent = mensajes["spti"];
+    }else if(arrayVeredicto.includes("tijeras") && arrayVeredicto.includes("lagarto")){
+        veredicto.textContent = mensajes["tila"];
+    }else if(arrayVeredicto.includes("lagarto") && arrayVeredicto.includes("papel")){
+        veredicto.textContent = mensajes["lapa"];
+    }else if(arrayVeredicto.includes("papel") && arrayVeredicto.includes("spock")){
+        veredicto.textContent = mensajes["pasp"];
+    }else if(arrayVeredicto.includes("spock") && arrayVeredicto.includes("piedra")){
+        veredicto.textContent = mensajes["sppi"];
+    }else if(arrayVeredicto.includes("piedra") && arrayVeredicto.includes("tijeras")){
+        veredicto.textContent = mensajes["piti"];
+    }else if(arrayVeredicto[0] === arrayVeredicto[1]){
+        veredicto.textContent = "Empate!"
+    }
 
+    document.getElementById("mensaje").className="visible";
 }
 
 function cargarTablero() {
