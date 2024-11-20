@@ -29,6 +29,9 @@ let spock;
 let usuario;
 let bot = jugadaBot();
 
+let ultimoArrastrado;
+let ultimoArrastradoId;
+
 function asignarElementosHTML() {
     //Función que utilizaremos para asignar los elementos HTML que vayamos a utilizar, a las varibales que hemos creado.
     piedra = document.getElementById("piedra");
@@ -37,6 +40,13 @@ function asignarElementosHTML() {
     lagarto = document.getElementById("lagarto");
     spock = document.getElementById("spock");
     dropzone = document.getElementById("seleccionado");
+
+    //Asignamos parentElement para poder reiniciar entre juagadas
+    piedra.setAttribute("data-original-parent", piedra.parentElement.id);
+    papel.setAttribute("data-original-parent", papel.parentElement.id);
+    tijera.setAttribute("data-original-parent", tijera.parentElement.id);
+    lagarto.setAttribute("data-original-parent", lagarto.parentElement.id);
+    spock.setAttribute("data-original-parent", spock.parentElement.id);
 
     console.log("Elementos creados");
 }
@@ -64,10 +74,19 @@ function cargarEventos() {
         event.preventDefault();
         const id = event.dataTransfer.getData('text/plain');
         const draggedElement = document.getElementById(id);
+        ultimoArrastrado = draggedElement;
+        ultimaZona = dropzone;
+        ultimoArrastradoId = id;
         dropzone.appendChild(draggedElement);
         usuario = id;
         deliverar();
     });
+
+    let btnContinuar = document.getElementById("continuar");
+    btnContinuar.addEventListener("click", function(){
+        continuar();
+    });
+
 
 }
 
@@ -79,6 +98,7 @@ function continuar() {
     document.getElementById("deliveracion").className = "invisible";
 
     //Si es una jugada reiniciamos todo menos los contadores de puntos.
+
     //Si es el final de la partida, también incluimos los contadores de puntos.
     cargarTablero();
 }
@@ -130,13 +150,18 @@ function mostrarMensaje() {
 }
 
 function cargarTablero() {
-    //Función donde crearemos los elementos que vayamos a necesitar, junto a sus atributos y eventos
-    //La utilizaremos para reiniciar cada jugada
+    if (!ultimoArrastradoId) {
+        console.log("Tiene que haber algun elemento arrastrado");
+        return;
+    }
+
+    let asignarCont = "cont" + ultimoArrastradoId;
+    let contPadre = document.getElementById(asignarCont);
+
+    if (contPadre) {
+        contPadre.appendChild(ultimoArrastrado);
+        dropzone.innerHTML = "";
+        console.log("Tablero reiniciado");
+    } 
+
 }
-
-/***************************DRAG AND DROP ****************************/
-
-//Funciones para el drag&drop
-
- 
- /***************************FIN DRAG AND DROP **************************/
