@@ -124,6 +124,11 @@ function mostrarMensaje() {
     arrayVeredicto.push(bot);
     if(arrayVeredicto.includes("tijeras") && arrayVeredicto.includes("papel")){
         veredicto.textContent = mensajes["tipa"];
+        if(usuario == "tijeras"){
+            puntuar(usuario);
+        }else if(bot == "tijeras"){
+            puntuar(bot);
+        }
     }else if(arrayVeredicto.includes("papel") && arrayVeredicto.includes("piedra")){
         veredicto.textContent = mensajes["papi"];
     }else if(arrayVeredicto.includes("piedra") && arrayVeredicto.includes("lagarto")){
@@ -164,4 +169,8 @@ function cargarTablero() {
         console.log("Tablero reiniciado");
     } 
 
+}
+
+function puntuar(ganador){
+    console.log(ganador);
 }
