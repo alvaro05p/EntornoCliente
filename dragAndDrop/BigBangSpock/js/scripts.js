@@ -22,7 +22,7 @@ window.onload = function(){
 
 let piedra;
 let papel;
-let tijera;
+let tijeras;
 let lagarto;
 let spock;
 
@@ -32,21 +32,17 @@ let bot = jugadaBot();
 let ultimoArrastrado;
 let ultimoArrastradoId;
 
+let puntosBot = 0;
+let puntosUser = 0;
+
 function asignarElementosHTML() {
     //Función que utilizaremos para asignar los elementos HTML que vayamos a utilizar, a las varibales que hemos creado.
     piedra = document.getElementById("piedra");
     papel = document.getElementById("papel");
-    tijera = document.getElementById("tijera");
+    tijeras = document.getElementById("tijeras");
     lagarto = document.getElementById("lagarto");
     spock = document.getElementById("spock");
     dropzone = document.getElementById("seleccionado");
-
-    //Asignamos parentElement para poder reiniciar entre juagadas
-    piedra.setAttribute("data-original-parent", piedra.parentElement.id);
-    papel.setAttribute("data-original-parent", papel.parentElement.id);
-    tijera.setAttribute("data-original-parent", tijera.parentElement.id);
-    lagarto.setAttribute("data-original-parent", lagarto.parentElement.id);
-    spock.setAttribute("data-original-parent", spock.parentElement.id);
 
     console.log("Elementos creados");
 }
@@ -101,19 +97,20 @@ function continuar() {
 
     //Si es el final de la partida, también incluimos los contadores de puntos.
     cargarTablero();
+
+    bot = jugadaBot();
 }
 
 function jugadaBot(){
-    let elementos = ["piedra",  "papel",  "tijera",  "lagarto",  "spock"];
+    let elementos = ["piedra",  "papel",  "tijeras",  "lagarto",  "spock"];
     let bot = elementos[Math.floor(Math.random() * 5)];
-
     return bot;
 }
 
 function deliverar() {
     document.getElementById("proteccion").className="";
     document.getElementById("deliveracion").className="";
-    setTimeout(mostrarMensaje,2000);
+    setTimeout(mostrarMensaje,500);
 }
 
 function mostrarMensaje() {
@@ -125,33 +122,92 @@ function mostrarMensaje() {
     if(arrayVeredicto.includes("tijeras") && arrayVeredicto.includes("papel")){
         veredicto.textContent = mensajes["tipa"];
         if(usuario == "tijeras"){
-            puntuar(usuario);
+            puntuar("usuario");
         }else if(bot == "tijeras"){
-            puntuar(bot);
+            puntuar("bot");
         }
     }else if(arrayVeredicto.includes("papel") && arrayVeredicto.includes("piedra")){
         veredicto.textContent = mensajes["papi"];
+        console.log(usuario + " " + bot);
+        if(usuario == "papel"){
+            puntuar("usuario");
+        }else if(bot == "papel"){
+            puntuar("bot");
+        }
     }else if(arrayVeredicto.includes("piedra") && arrayVeredicto.includes("lagarto")){
         veredicto.textContent = mensajes["pila"];
+        if(usuario == "piedra"){
+            puntuar("usuario");
+        }else if(bot == "piedra"){
+            puntuar("bot");
+        }
     }else if(arrayVeredicto.includes("lagarto") && arrayVeredicto.includes("spock")){
         veredicto.textContent = mensajes["lasp"];
+        if(usuario == "lagarto"){
+            puntuar("usuario");
+        }else if(bot == "lagarto"){
+            puntuar("bot");
+        }
     }else if(arrayVeredicto.includes("spock") && arrayVeredicto.includes("tijeras")){
         veredicto.textContent = mensajes["spti"];
+        if(usuario == "spock"){
+            puntuar("usuario");
+        }else if(bot == "spock"){
+            puntuar("bot");
+        }
     }else if(arrayVeredicto.includes("tijeras") && arrayVeredicto.includes("lagarto")){
         veredicto.textContent = mensajes["tila"];
+        if(usuario == "tijeras"){
+            puntuar("usuario");
+        }else if(bot == "tijeras"){
+            puntuar("bot");
+        }
     }else if(arrayVeredicto.includes("lagarto") && arrayVeredicto.includes("papel")){
         veredicto.textContent = mensajes["lapa"];
+        if(usuario == "lagarto"){
+            puntuar("usuario");
+        }else if(bot == "lagarto"){
+            puntuar("bot");
+        }
     }else if(arrayVeredicto.includes("papel") && arrayVeredicto.includes("spock")){
         veredicto.textContent = mensajes["pasp"];
+        if(usuario == "papel"){
+            puntuar("usuario");
+        }else if(bot == "papel"){
+            puntuar("bot");
+        }
     }else if(arrayVeredicto.includes("spock") && arrayVeredicto.includes("piedra")){
         veredicto.textContent = mensajes["sppi"];
+        if(usuario == "spock"){
+            puntuar("usuario");
+        }else if(bot == "spock"){
+            puntuar("bot");
+        }
     }else if(arrayVeredicto.includes("piedra") && arrayVeredicto.includes("tijeras")){
         veredicto.textContent = mensajes["piti"];
+        if(usuario == "piedra"){
+            puntuar("usuario");
+        }else if(bot == "piedra"){
+            puntuar("bot");
+        }
     }else if(arrayVeredicto[0] === arrayVeredicto[1]){
         veredicto.textContent = "Empate!"
     }
 
     document.getElementById("mensaje").className="visible";
+}
+
+function mostrarGanador(ganadorPartida) {
+    //Mostramos el mensaje en función del resultado de la jugada o de la partida
+    let veredicto = document.getElementById("veredicto");
+    if(ganadorPartida == "usuario"){
+        veredicto.textContent="Gana el usuario";
+    }else if(ganadorPartida == "bot"){
+        veredicto.textContent="Gana la maquina";
+    }
+    
+    document.getElementById("mensaje").className="visible";
+    document.getElementById("continuar").className="invisible";
 }
 
 function cargarTablero() {
@@ -172,5 +228,25 @@ function cargarTablero() {
 }
 
 function puntuar(ganador){
-    console.log(ganador);
+    let marcadorUser = document.getElementById("jugador");
+    let marcadorBot = document.getElementById("maquina");
+    let punto = document.createElement("div");
+    punto.classList.add("punto");
+    
+    if(ganador == "usuario"){
+        punto.classList.add("mio");
+        marcadorUser.appendChild(punto);
+        puntosUser++;
+    }else if(ganador == "bot"){
+        punto.classList.add("suyo");
+        marcadorBot.appendChild(punto);
+        puntosBot++;
+    }
+
+    if(puntosUser == 10){
+        mostrarGanador("usuario");
+    }else if(puntosBot == 10){
+        mostrarGanador("bot");
+    }
+    
 }
