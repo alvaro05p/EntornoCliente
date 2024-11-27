@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Selector de Medios</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="section videos">
+            <h2>Selección de Videos</h2>
+            <ul id="video-list">
+                </ul>
+            <video width="400">
+                <source src="campfire.mp4" type="video/mp4">
+                Your browser does not support HTML video.
+            </video>
+            <ul>
+                <li>Silenciar</li>
+                <li>-10 segs</li>
+                <li>Play/Stop</li>
+                <li>+10 segs</li>
+                <li>Reiniciar</li>
+                <li>+ Vol</li>
+                <li>- Vol</li>
+            </ul>
+    </div>
+        <div class="section audio">
+            <h2>Selección de Música de Radio</h2>
+            <ul id="audio-list">
+                </ul>
+            <audio controls>
+                <source src="Blue Moon.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

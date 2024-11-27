@@ -1,0 +1,38 @@
+body{
+    background-color: #004509;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    background-color: #004509;
+}
+
+.section {
+    width: 49%;
+    border-style: solid;
+    text-align: center;
+    justify-content: center;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+li {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f0f0f0;
+    margin-bottom: 5px;
+}
+
+li:hover {
+    background-color: #007410;
+}
+
+.videos{
+    border-image: url("tele.png");
+}
