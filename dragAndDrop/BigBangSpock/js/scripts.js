@@ -75,6 +75,7 @@ function cargarEventos() {
         ultimoArrastradoId = id;
         dropzone.appendChild(draggedElement);
         usuario = id;
+        setImagen(bot);
         deliverar();
     });
 
@@ -94,7 +95,7 @@ function continuar() {
     document.getElementById("deliveracion").className = "invisible";
 
     //Si es una jugada reiniciamos todo menos los contadores de puntos.
-
+    
     //Si es el final de la partida, también incluimos los contadores de puntos.
     cargarTablero();
 
@@ -107,10 +108,15 @@ function jugadaBot(){
     return bot;
 }
 
+function setImagen(bot){
+    let imgEnemigo = document.getElementById("imgEnemigo");
+    imgEnemigo.src = "/img/" + bot + ".png";
+}
+
 function deliverar() {
     document.getElementById("proteccion").className="";
     document.getElementById("deliveracion").className="";
-    setTimeout(mostrarMensaje,500);
+    setTimeout(mostrarMensaje,1000);
 }
 
 function mostrarMensaje() {
