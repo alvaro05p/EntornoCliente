@@ -1,0 +1,120 @@
+body{
+    color: white;
+    background-color: rgb(46, 46, 46);
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.wordle-board {
+    margin: 20px auto;
+    display: grid;
+    grid-template-rows: repeat(6, 50px);
+    gap: 10px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    gap: 10px;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    text-transform: uppercase;
+    border-radius: 5px;
+}
+
+.keyboard {
+    margin-top: 20px;
+}
+
+.key-row {
+    margin-bottom: 10px;
+}
+
+.key {
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+    font-size: 18px;
+    text-transform: uppercase;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.key:hover{
+    box-shadow: inset 2px 3px 5px;
+}
+
+.big{
+    width: 80px;
+}
+
+.selec{
+    border-color: rgb(46, 176, 219);
+}
+
+.verde{
+    border-color: rgb(101, 231, 101);
+}
+
+.naranja{
+    border-color: rgb(235, 121, 76);
+}
+
+.victoria{
+    font-size: 400%;
+    font-weight: 700;
+    color: rgb(99, 224, 99);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+
+.boton{
+    background-color: rgb(36, 36, 36);
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+}
+
+.derrota{
+    font-size: 200%;
+    font-weight: 700;
+    color: rgb(231, 105, 105);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+
+
+.green-key{
+    border: 5px solid rgb(115, 219, 95);
+
+}
+
+.orange-key{
+    border: 5px solid rgb(228, 162, 87);
+
+}
+
+.grey-key{
+    background-color: gray;
+
+}
