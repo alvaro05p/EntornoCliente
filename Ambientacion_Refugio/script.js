@@ -7,7 +7,7 @@ const audioPlayer = document.querySelector('audio');
 // Datos de ejemplo
 const videos = [
     { id: 1, title: 'Video 1', url: 'campfire.mp4' },
-    { id: 1, title: 'Video 2', url: 'perro.mp4' }
+    { id: 1, title: 'Video 2', url: 'cosecha.mp4' }
 ];
 
 const audios = [
@@ -33,21 +33,19 @@ videos.forEach(video => createListItem(videoList, video, videoPlayer));
 audios.forEach(audio => createListItem(audioList, audio, audioPlayer));
 
 // Seleccionamos los elementos del html que hacen de botonera para el reproductor
-const videoControls = {
-    mute: document.querySelector('.videos ul li:nth-child(1)'), 
-    rewind: document.querySelector('.videos ul li:nth-child(2)'), 
-    playPause: document.querySelector('.videos ul li:nth-child(3)'), 
-    forward: document.querySelector('.videos ul li:nth-child(4)'), 
-    restart: document.querySelector('.videos ul li:nth-child(5)'), 
-    volumeUp: document.querySelector('.videos ul li:nth-child(6)'),
-    volumeDown: document.querySelector('.videos ul li:nth-child(7)')
-};
+
 
 // Cambia entre mutear y desmuear (como un toggle)
 videoControls.mute.addEventListener('click', () => {
-    videoPlayer.muted = !videoPlayer.muted;
-});
 
+    if(videoPlayer.muted){
+        textContent = "Desileciár";
+        
+    }else{
+        textContent = "Silenciar";
+    }
+    
+});
 
 // Rebobinar
 videoControls.rewind.addEventListener('click', () => {

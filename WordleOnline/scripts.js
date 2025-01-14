@@ -1,240 +1,164 @@
 let filaActual = 0;
 let colActual = 0;
-
-seleccionada();
-
-let palabras = [
-    "CIELO", "NOCHE", "FRUTA", "LLAMA", "FLOTA", "FUEGO", "LLAVE", "GENTE", "FELIZ", "ARBOL",
-    "AVION", "BALON", "BARCO", "BOLSA", "BURRO", "CABRA", "CAMPO", "CARTA", "CASAS", "CIEGA",
-    "COCHE", "CORAL", "CORTE", "DEDOS", "DIOSA", "DULCE", "ESFER", "FLOJO", "FLORA", "GRITO",
-    "HABLA", "HORNO", "JUEGO", "JOVEN", "LAGOS", "LARGO", "LIBRO", "LUCHA", "LUNES", "MANOS",
-    "MENTA", "MESA", "METAL", "MONTA", "NACER", "NIEVE", "ORCAS", "OVEJA", "OZONO", "PAJAR",
-    "PAPEL", "PECES", "PERRO", "PIANO", "PIEZA", "PLUMA", "POLLO", "PUROS", "QUESO", "RAYOS",
-    "RISAS", "ROBOT", "RUEDA", "SABIO", "SELVA", "SOLAR", "SUELO", "TANGO", "TELAS", "TIGRE",
-    "TOMAR", "TORRE", "VALLE", "VELAS", "VIAJE", "VIBRA", "VIDAS", "YERBA", "ZORRO", "ZURDO",
-    "SABOR", "CLIMA", "BRISA", "PLATO", "CABLE", "MOTOR", "ALMAS", "PINTA", "TARTA", "ZONAS",
-    "BANDA", "PISTA", "LUCES", "BRAZO", "CRUZ", "FOCOS", "SILLA", "PARED", "ACERO", "BAILE",
-    "CIRCO", "RITMO", "HIELO", "CLAVE", "BOTAS", "GAFAS", "SUEÑO", "POLVO", "FINCA", "GOLFO",
-    "MARZO", "SANTA", "RIEGO", "PANES", "COSTA", "ROJOS", "TALLO", "PARDO", "VIVIR", "LAZOS",
-    "BRAVO", "FANGO", "CALOR", "PATIO", "TRIGO", "REMOS", "CALMA", "BUQUE", "LIMON", "RASGO",
-    "TENIS", "CREMA", "DIETA", "LATIR", "PALMA", "SUDOR", "DELTA", "GRIFO", "CHINA", "RUEDA",
-    "TEMOR", "CASCO", "MANIA", "COCOA", "OPERA", "PETAS", "VIOLE"
-];
-
-let palabra = palabras[Math.floor(Math.random() * palabras.length)];
-console.log(palabra);
-
+let palabra = "";
 let escrito = "";
 
-document.querySelectorAll(".key").forEach(function(button) {
-    button.addEventListener("click", function() {
-        let valor = button.textContent.trim();
-        if (valor != "DEL" && valor != "ENTER") {
-            if (colActual < 5) {
-                escrito += valor;
-                console.log(escrito);
-                recopilar(valor);
-            }
-        } else if (valor === "DEL") {
-            del();
-        } else if (valor === "ENTER" && colActual === 5) {
-            validar(escrito);
-            enter();
-        }
-    });
-});
+const csvFilePath = 'palabras.csv';
 
-document.addEventListener("keydown", function(event) {
-    let key = event.key.toUpperCase();  // Capturamos la tecla en mayúsculas
-    console.log(key);
-    let valor = key;
+(async function iniciarJuego() {
+    palabra = await obtenerPalabraCSV();
+    console.log("Palabra inicial seleccionada:", palabra);
+    seleccionada();
+})();
 
-    if (/^[A-Z]$/.test(key)) {
-        if (colActual < 5) {
-            escrito += valor;
-            console.log(escrito);
-            recopilar(valor);
-        }
-    } else if (valor === "BACKSPACE") {
+// Función para obtener palabra válida desde el CSV
+async function obtenerPalabraCSV() {
+    try {
+        const response = await fetch(csvFilePath);
+        const csvText = await response.text();
+        const rows = csvText.split("\n").map(row => row.split(","));
+        let palabraObtenida;
+
+        do {
+            const randomIndex = Math.floor(Math.random() * (rows.length - 1)) + 1;
+            palabraObtenida = rows[randomIndex]?.[0]?.trim() || "";
+        } while (palabraObtenida.length !== 5);
+
+        return palabraObtenida.toUpperCase();
+    } catch (error) {
+        console.error("Error al leer el archivo CSV:", error);
+        return null;
+    }
+}
+
+// Lógica de eventos para teclas y clics
+document.addEventListener("keydown", manejarEntrada);
+document.querySelectorAll(".key").forEach(button =>
+    button.addEventListener("click", () => manejarEntrada({ key: button.textContent.trim() }))
+);
+
+function manejarEntrada(event) {
+    const key = event.key?.toUpperCase() || event.key || event.keyCode?.toString();
+    if (/^[A-Z]$/.test(key) && colActual < 5) {
+        escrito += key;
+        recopilar(key);
+    } else if (key === "BACKSPACE") {
         del();
-    } else if (valor === "ENTER" && colActual === 5) {
+    } else if (key === "ENTER" && colActual === 5) {
         validar(escrito);
         enter();
     }
-});
+}
 
 // Función para llenar las celdas con la letra seleccionada
 function recopilar(valor) {
-    let filas = document.getElementsByClassName("row");
-    let filaSel = filas[filaActual];
-    let columnas = filaSel.getElementsByClassName("cell");
-
-    if (colActual < 5) {
-        let columnaSel = columnas[colActual];
-        columnaSel.textContent = valor;
-        colActual++;
-    }
+    const filaSel = document.getElementsByClassName("row")[filaActual];
+    const columnaSel = filaSel.getElementsByClassName("cell")[colActual];
+    columnaSel.textContent = valor;
+    colActual++;
 }
 
-// Función para eliminar la última letra ingresada
+// Eliminar la última letra
 function del() {
-    let filas = document.getElementsByClassName("row");
-    let filaSel = filas[filaActual];
-    let columnas = filaSel.getElementsByClassName("cell");
-
     if (colActual > 0) {
         colActual--;
-        let columnaSel = columnas[colActual];
-        columnaSel.textContent = "";
-    }
-
-    if (escrito.length > 0) {
+        const filaSel = document.getElementsByClassName("row")[filaActual];
+        filaSel.getElementsByClassName("cell")[colActual].textContent = "";
         escrito = escrito.slice(0, -1);
-        console.log(escrito);
     }
 }
 
-// Avanza a la siguiente fila al presionar "ENTER"
+// Validar la palabra ingresada
+async function validar(escrito) {
+    console.log("Validando palabra:", escrito);
+    const filaSel = document.getElementsByClassName("row")[filaActual];
+    const columnas = filaSel.getElementsByClassName("cell");
+
+    for (let i = 0; i < 5; i++) {
+        const letra = escrito[i];
+        if (letra === palabra[i]) {
+            columnas[i].classList.add("verde");
+        } else if (palabra.includes(letra)) {
+            columnas[i].classList.add("naranja");
+        } else {
+            columnas[i].classList.add("gris");
+        }
+    }
+
+    if (escrito === palabra) {
+        mostrarVictoria();
+    } else if (filaActual === 5) {
+        mostrarDerrota();
+    }
+}
+
+// Avanzar a la siguiente fila
 function enter() {
     filaActual++;
     colActual = 0;
-    if (palabra !== escrito) {
-        seleccionada();
-        escrito = "";
-    }
+    escrito = "";
+    seleccionada();
 }
 
-// Resalta la fila actual en el tablero
+// Resaltar la fila actual
 function seleccionada() {
-    let filas = document.getElementsByClassName("row");
-
-    for (let i = 0; i < filas.length; i++) {
-        let columnas = filas[i].getElementsByClassName("cell");
-        for (let j = 0; j < columnas.length; j++) {
-            columnas[j].classList.remove("selec");
-        }
-    }
-
-    // Añadir la clase 'selec' a la fila actual
-    let filaSel = filas[filaActual];
-    let columnas = filaSel.getElementsByClassName("cell");
-
-    for (let i = 0; i < columnas.length; i++) {
-        columnas[i].classList.add("selec");
-    }
+    document.querySelectorAll(".row").forEach(row =>
+        row.querySelectorAll(".cell").forEach(cell => cell.classList.remove("selec"))
+    );
+    document.querySelectorAll(".row")[filaActual].querySelectorAll(".cell").forEach(cell =>
+        cell.classList.add("selec")
+    );
 }
 
-// Función para validar si la palabra escrita es correcta
-function validar(escrito) {
+// Mostrar victoria
+function mostrarVictoria() {
+    const container = document.getElementById("container");
 
-    console.log("-------COMPROBAR------");
+    // Crear el div de victoria
+    const victoriaDiv = document.createElement("div");
+    victoriaDiv.classList.add("victoria");
+    victoriaDiv.textContent = "¡Perfecto!";
 
-    let api = "https://rae-api.com/api/words/" + escrito.toLowerCase();
+    // Crear el botón para reiniciar
+    const boton = document.createElement("button");
+    boton.textContent = "¿Otra palabra?";
+    boton.classList.add("boton");
+    boton.addEventListener("click", reiniciar);
 
-    fetch(api)
-        .then(response => response.text())
-        .then(data => {
-            const json = JSON.parse(data);
-            if(json.ok == true){
-                let existe = document.createElement("div");
-                existe.textContent = escrito + " encontrado en la rae";
-                let container = document.getElementById("container");
-                container.appendChild(existe);
-            }
-    });
+    // Añadir el botón al div
+    victoriaDiv.appendChild(boton);
 
-    
-
-    let filas = document.getElementsByClassName("row");
-    let filaSel = filas[filaActual];
-    let columnas = filaSel.getElementsByClassName("cell");
-
-    // Recorremos lo que tenemos escrito comparándolo con la palabra
-    for (let i = 0; i < columnas.length; i++) {
-        let letraEscrita = escrito[i];
-        let letraPalabra = palabra[i];
-
-        if (letraEscrita === letraPalabra) {
-            columnas[i].classList.add("verde");
-            marcarTeclado(letraEscrita, "green-key");
-        } else if (palabra.includes(letraEscrita)) {
-            columnas[i].classList.add("naranja");
-            marcarTeclado(letraEscrita, "orange-key");
-        } else {
-            columnas[i].classList.add("gris");
-            marcarTeclado(letraEscrita, "grey-key");
-        }
-    }
-
-    // Mostrar mensaje si la palabra es correcta o si se han agotado los intentos
-    let teclado = document.getElementById("keyboard");
-
-    if (escrito === palabra) {
-        for (let i = 0; i < columnas.length; i++) {
-            columnas[i].classList.add("verde");
-        }
-
-        teclado.innerHTML = "";
-        teclado.textContent = "¡Perfecto!";
-
-        let boton = document.createElement("button");
-        let textoBoton = document.createTextNode("¿Otra palabra?");
-        boton.appendChild(textoBoton);
-        teclado.appendChild(boton);
-
-        teclado.classList.remove("keyboard");
-        teclado.classList.add("victoria");
-        boton.classList.add("boton");
-
-        boton.addEventListener("click", function() {
-            reiniciar();
-        });
-    } else if (filaActual == 5) {
-        teclado.innerHTML = "";
-        teclado.textContent = "Vaya, la palabra era " + palabra;
-
-        let boton = document.createElement("button");
-        let textoBoton = document.createTextNode("¿Otra palabra?");
-        boton.appendChild(textoBoton);
-        teclado.appendChild(boton);
-
-        teclado.classList.remove("keyboard");
-        teclado.classList.add("derrota");
-        boton.classList.add("boton");
-
-        boton.addEventListener("click", function() {
-            reiniciar();
-        });
-    }
+    // Reemplazar el teclado con el div de victoria
+    const teclado = document.getElementById("keyboard");
+    teclado.innerHTML = "";
+    teclado.appendChild(victoriaDiv);
 }
 
-function marcarTeclado(letra, clase) {
-    document.querySelectorAll(".key").forEach(function(button) {
-        if (button.textContent === letra) {
+// Mostrar derrota
+function mostrarDerrota() {
+    const container = document.getElementById("container");
 
-            // Si la clase es verde o naranja la 
-            if (clase === "green-key") {
-                button.classList.remove("grey-key", "orange-key");
-                button.classList.add(clase);
-            } else if (clase === "orange-key") {
+    // Crear el div de derrota
+    const derrotaDiv = document.createElement("div");
+    derrotaDiv.classList.add("derrota");
+    derrotaDiv.textContent = "Vaya, la palabra era " + palabra;
 
-                //Si ya contiene la clase verde no hacemos nada
-                if (!button.classList.contains("green-key")) {
-                    button.classList.remove("grey-key");
-                    button.classList.add(clase);
-                }
-            } else if (clase === "grey-key") {
-                // Solo se añade el gris si la tecla no es verde o naranja
-                if (!button.classList.contains("green-key") && !button.classList.contains("orange-key")) {
-                    button.classList.add(clase);
-                }
-            }
-        }
-    });
+    // Crear el botón para reiniciar
+    const boton = document.createElement("button");
+    boton.textContent = "¿Otra palabra?";
+    boton.classList.add("boton");
+    boton.addEventListener("click", reiniciar);
+
+    // Añadir el botón al div
+    derrotaDiv.appendChild(boton);
+
+    // Reemplazar el teclado con el div de derrota
+    const teclado = document.getElementById("keyboard");
+    teclado.innerHTML = "";
+    teclado.appendChild(derrotaDiv);
 }
 
-
-// Reiniciar la página
+// Reiniciar juego
 function reiniciar() {
     location.reload();
 }
