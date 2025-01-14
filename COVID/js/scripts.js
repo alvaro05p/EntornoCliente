@@ -7,7 +7,7 @@ areas.forEach(area => {
         let tituloModal = document.getElementById("titulo");
         tituloModal.textContent = titulo;
         modal.classList.remove("oculto");
-        fetch('https://api.covidtracking.com/v1/states/ca/info.json')
+        fetch('https://api.chucknorris.io/jokes/random')
         .then(response => response.json())
         .then(json => console.log(json))
 
