@@ -6,10 +6,13 @@ areas.forEach(area => {
         let modal = document.getElementById("modal");
         let tituloModal = document.getElementById("titulo");
         tituloModal.textContent = titulo;
+        let datacod = area.getAttribute("data-cod");
         modal.classList.remove("oculto");
-        fetch('https://api.chucknorris.io/jokes/random')
+        fetch('https://api.covidtracking.com/v1/states/' + datacod + '/info.json')
         .then(response => response.json())
-        .then(json => console.log(json))
+        .then(json => {
+            
+        })
 
     });
 });
