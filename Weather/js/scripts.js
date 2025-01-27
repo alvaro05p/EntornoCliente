@@ -17,36 +17,44 @@ areas.forEach(area => {
         let id = this.getAttribute("data-cod");
         let valoresArray = coordenadas.find(item => item.code === id);
         let coords = valoresArray.coordinates;
+        let contenido = document.getElementById("contenido");
         //console.log(coords);
         fetch("https://api.weatherusa.net/v1/forecast?q=" + coords + "&hourly=2&units=e")
         .then(response => response.json()) 
         .then(data => {
 
-            
+            for(let i=0;i<6;i++){
+                console.log(data[i].localtime + " => " + data[i].wx_str);
+                console.log(coords);
+                let titulo = document.createElement("p");
+                let icono = document.createElement("img");
+                icono.classList.add("icono");
+                let iconDesc = data[i].wx_icon;
+                icono.src = "./icons/"+ iconDesc +".png";
+                console.log(iconDesc);
+                titulo.textContent = data[i].localtime + " => " + data[i].wx_str;
+                //let salto = document.createElement("br");
+                //contenido.appendChild(salto);
+                contenido.appendChild(titulo);
+                contenido.appendChild(icono);   
+            }
 
-            data.forEach(element => {
-                console.log(element.localtime);
-            });
-                let hora = data[1];
-                
-                let descripcion = hora.localtime;
-                console.log(descripcion);
-                /*
-                let weather = dia.wx_str;
-                let iconDesc = dia.wx_icon;
-                let descDia = document.getElementById("dia1");
-                let descWeather = document.getElementById("weather1");
-                descDia.textContent = descripcion;
-                descWeather.textContent = weather;
-                let icon = document.getElementById("icon1");
-                icon.src = "./icons/"+ iconDesc +".png";
-                */
-            
-
-            
-
-            
         })
+
+        fetch("https://api.weatherusa.net/v1/skycam?q=" + coords + "&hourly=2&units=e")
+        .then(response => response.json()) 
+        .then(data => { 
+            let img_url = data[0].image;
+            console.log("IMAGEN: " + img_url);
+            let skycam = document.createElement("img");
+            skycam.src = img_url;
+            modal.appendChild(skycam);
+        })
+        .catch(error => {
+            let skycam = document.createElement("img");
+            skycam.src = not_found.png;
+            modal.appendChild(skycam);
+        });
 
     })
 

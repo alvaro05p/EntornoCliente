@@ -1,5 +1,6 @@
 body{
-    background-image: url("/america-hurricane.gif");
+    background-image: url("/background.jpg");
+    background-repeat: no-repeat;
     background-size: cover;
 }
 
@@ -7,6 +8,10 @@ body{
     border-radius: 50px;
 }
 
+.icono{
+    width: 50px;
+    border-radius: 50px;
+}
 
 
 #fondo {
@@ -103,4 +108,10 @@ tr{
 .icono img{
     width: 40px;
 }
-
+#contenido{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    max-height: 400px;
+    gap: 10px;
+    overflow: auto;
+}
