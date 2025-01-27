@@ -7,6 +7,9 @@ function cerrar(){
     fondo.classList.add("oculto")
 }
 
+skycam = document.getElementById("skycam");
+
+
 areas.forEach(area => {
     area.addEventListener("click", function(){
         
@@ -41,24 +44,18 @@ areas.forEach(area => {
 
         })
 
-        fetch("https://api.weatherusa.net/v1/skycam?q=" + coords + "&hourly=2&units=e")
+        fetch("https://api.weatherusa.net/v1/skycams?q=" + coords + "&hourly=2&units=e")
         .then(response => response.json()) 
         .then(data => { 
             let img_url = data[0].image;
             console.log("IMAGEN: " + img_url);
-            let skycam = document.createElement("img");
             skycam.src = img_url;
-            modal.appendChild(skycam);
         })
         .catch(error => {
-            let skycam = document.createElement("img");
-            skycam.src = not_found.png;
-            modal.appendChild(skycam);
+            skycam.src = "./not_found.png"; // Replace with the actual path or URL of the fallback image
         });
 
     })
-
-    
 
     let coordenadas = [
         { code: "AL", coordinates: "32.377716,-86.300568" }, // Montgomery, Alabama

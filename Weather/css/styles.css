@@ -4,6 +4,12 @@ body{
     background-size: cover;
 }
 
+@media(max-width: 820px){
+    body{
+        background-image: url(/mobile.jpg);
+    }
+}
+
 .no-resize{
     border-radius: 50px;
 }
@@ -114,4 +120,11 @@ tr{
     max-height: 400px;
     gap: 10px;
     overflow: auto;
+}
+
+#skycam{
+    margin-top: 30px;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px;
 }
