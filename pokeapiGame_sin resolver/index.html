@@ -1,0 +1,64 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pokemon Battle</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<div id="cartasPlayer">
+    <div id="totalPlayer">0</div>
+</div>
+<div id="cartasMachine">
+    <div id="totalMachine">0</div>
+
+</div>
+<div id="main">
+    <div id="machine">
+        <div class="carta">
+            <img src="img/dorso.png" alt="Machine">
+        </div>
+    </div>
+    <div id="play">
+        <div id="jugadaMachine">
+
+        </div>
+        <div id="jugadaPlayer">
+
+        </div>
+    </div>
+    <div id="player">
+        <div v-for="(id, index) in pokemonIds" :key="index" class="carta">
+            <div>
+                <img :src="getPokemonImage(id)" alt="Pokemon">
+            </div>
+            <div>Pokémon #{{ id }}</div>
+        </div>
+    </div>
+</div>
+<div id="cartel" class="ocultar">
+    x
+</div>
+<div id="reportero" class="ocultar">
+    <img src="img/progress.gif">
+    Cargando...
+</div>
+
+<div class="modal">
+    <div class="modal-content scroll">
+      <!-- Iteramos sobre los Pokémon IDs -->
+      <div v-for="(id, index) in pokemonIds" :key="index" class="carta">
+        <div>
+          <!-- Llamamos a la función getPokemonImage pasando el id de cada Pokémon -->
+          <img :src="getPokemonImage(id)" alt="Pokemon">
+        </div>
+        <div>{{ getPokemonName(id) }}</div>
+      </div>
+    </div>
+  </div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script type="text/javascript" src="js/scripts.js"></script>
+
+</body>
+</html>
