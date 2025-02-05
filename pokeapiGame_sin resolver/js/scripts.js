@@ -4,7 +4,8 @@ createApp({
   data() {
     return {
       pokemonIds: Array.from({ length: 151 }, (_, i) => i + 1),
-      pokemonData: {}
+      pokemonData: {},
+      cartasSeleccionadas : []
     };
   },
   methods: {
@@ -12,6 +13,24 @@ createApp({
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
       const data = await response.json();
       this.pokemonData[id] = data;
+    },
+
+    seleccionarCarta(id) {
+      this.cartaSeleccionada = id;
+
+      const index = this.cartasSeleccionadas.indexOf(id);
+
+      if(index === -1 && this.cartasSeleccionadas.length < 5){
+        this.cartasSeleccionadas.push(id);
+        document.querySelector(`[data-id="${id}"]`)?.classList.add("seleccionada");
+      }else if(index != -1){
+        this.cartasSeleccionadas.splice(index, 1);
+        document.querySelector(`[data-id="${id}"]`)?.classList.remove("seleccionada");
+      }
+
+      
+
+      console.log(this.cartasSeleccionadas);
     },
 
     // Función para obtener la URL de la imagen del Pokémon
