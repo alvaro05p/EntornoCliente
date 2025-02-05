@@ -5,7 +5,8 @@ createApp({
     return {
       pokemonIds: Array.from({ length: 151 }, (_, i) => i + 1),
       pokemonData: {},
-      cartasSeleccionadas : []
+      cartasSeleccionadas : [],
+      mostrarModal: true
     };
   },
   methods: {
@@ -14,6 +15,8 @@ createApp({
       const data = await response.json();
       this.pokemonData[id] = data;
     },
+
+    
 
     seleccionarCarta(id) {
       this.cartaSeleccionada = id;
@@ -28,8 +31,6 @@ createApp({
         document.querySelector(`[data-id="${id}"]`)?.classList.remove("seleccionada");
       }
 
-      
-
       console.log(this.cartasSeleccionadas);
     },
 
@@ -43,7 +44,13 @@ createApp({
     getPokemonName(id) {
       const pokemon = this.pokemonData[id];
       return pokemon ? pokemon.name : '';
+    },
+
+    ocultarModal(){
+      this.mostrarModal= false;
     }
+
+
   },
 
   mounted() {
@@ -56,4 +63,4 @@ createApp({
       console.error("Error al cargar los Pokémon:", error);
     });
   }
-}).mount(".modal-content");
+}).mount("body");

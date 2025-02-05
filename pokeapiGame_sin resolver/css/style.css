@@ -233,6 +233,17 @@
     border-radius: 10px;
 }
 
-.seleccionada img{
+.seleccionada{
     background-color: rgb(255, 255, 142);
+}
+
+#jugar{
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 5px 3px 5px rgb(0, 0, 0);
+    font-family: pokemon;
+    width: 100px;
+    height: 50px;
+    font-size: large;
+    margin-left: 10px;
 }

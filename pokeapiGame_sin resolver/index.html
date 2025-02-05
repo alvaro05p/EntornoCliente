@@ -6,55 +6,59 @@
 </head>
 
 <body>
-<div id="cartasPlayer">
-    <div id="totalPlayer">0</div>
-</div>
-<div id="cartasMachine">
-    <div id="totalMachine">0</div>
-</div>
-<div id="main">
-    <div id="machine">
-        <div class="carta">
-            <img src="img/dorso.png" alt="Machine">
-        </div>
-    </div>
-    <div id="play">
-        <div id="jugadaMachine">
+<div id="app">
 
-        </div>
-        <div id="jugadaPlayer">
-
-        </div>
+    <div id="cartasPlayer">
+        <div id="totalPlayer">0</div>
     </div>
-    <div id="player">
-        <div v-for="(id, index) in pokemonIds" :key="index" class="carta">
-            <div>
-                <img :src="getPokemonImage(id)" alt="Pokemon">
+    <div id="cartasMachine">
+        <div id="totalMachine">0</div>
+    </div>
+    <div id="main">
+        <div id="machine">
+            <div class="carta">
+                <img src="img/dorso.png" alt="Machine">
             </div>
-            <div>Pokémon #{{ id }}</div>
         </div>
-    </div>
-</div>
-<div id="cartel" class="ocultar">
-    x
-</div>
-<div id="reportero" class="ocultar">
-    <img src="img/progress.gif">
-    Cargando...
-</div>
+        <div id="play">
+            <div id="jugadaMachine">
 
-<div class="modal">
-    <div class="modal-content scroll">
-      <!-- Iteramos sobre los Pokémon IDs -->
-      <div v-for="(id, index) in pokemonIds" :key="index" :data-id="id" class="carta" @click="seleccionarCarta(id)">
-        <div>
-          <!-- Llamamos a la función getPokemonImage pasando el id de cada Pokémon -->
-          <img :src="getPokemonImage(id)" alt="Pokemon">
+            </div>
+            <div id="jugadaPlayer">
+
+            </div>
         </div>
-        <div>{{ getPokemonName(id) }}</div>
-      </div>
+        <div id="player">
+            <div v-for="(id, index) in cartasSeleccionadas" :key="index" :data-id="id" class="carta" >
+                <div>
+                <img :src="getPokemonImage(id)" alt="Pokemon">
+                </div>
+                <div>{{ getPokemonName(id) }}</div>
+            </div>
+        </div>
     </div>
-  </div>
+    <div id="cartel" class="ocultar">
+        x
+    </div>
+    <div id="reportero" class="ocultar">
+        <img src="img/progress.gif">
+        Cargando...
+    </div>
+
+    <div class="pokedex">
+        <div class="modal" v-show="mostrarModal">
+            <div class="modal-content scroll">
+            <div v-for="(id, index) in pokemonIds" :key="index" :data-id="id" class="carta" @click="seleccionarCarta(id)">
+                <div>
+                <img :src="getPokemonImage(id)" alt="Pokemon">
+                </div>
+                <div>{{ getPokemonName(id) }}</div>
+            </div>
+            </div>
+            <button id="jugar" v-show="cartasSeleccionadas.length == 5 && mostrarModal" @click="ocultarModal()">Jugar</button>
+        </div>
+    </div>
+</div>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script type="text/javascript" src="js/scripts.js"></script>
