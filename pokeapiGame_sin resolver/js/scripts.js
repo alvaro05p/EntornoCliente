@@ -6,7 +6,8 @@ createApp({
       pokemonIds: Array.from({ length: 151 }, (_, i) => i + 1),
       pokemonData: {},
       cartasSeleccionadas : [],
-      mostrarModal: true
+      mostrarModal: true,
+      cartasEnemigo: []
     };
   },
   methods: {
@@ -16,22 +17,35 @@ createApp({
       this.pokemonData[id] = data;
     },
 
-    
+    generarPokemonsEnemigo(){
+      for(let i=0;i<5;i++){
+        const randomNumber = Math.floor(Math.random() * 151) + 1;
+        if(!this.cartasEnemigo.includes(randomNumber)){
+          this.cartasEnemigo.push(randomNumber);
+        }else{
+          i--;
+        }
+      }
 
-    seleccionarCarta(id) {
+      console.log(this.cartasEnemigo);
+      
+    },
+
+    seleccionarCarta(id, event) {
+
+      console.log("Inicia: " + event.currentTarget);
       this.cartaSeleccionada = id;
 
       const index = this.cartasSeleccionadas.indexOf(id);
 
       if(index === -1 && this.cartasSeleccionadas.length < 5){
         this.cartasSeleccionadas.push(id);
-        document.querySelector(`[data-id="${id}"]`)?.classList.add("seleccionada");
+        event.currentTarget.classList.add("seleccionada");
       }else if(index != -1){
         this.cartasSeleccionadas.splice(index, 1);
-        document.querySelector(`[data-id="${id}"]`)?.classList.remove("seleccionada");
+        event.currentTarget.classList.remove("seleccionada");
       }
 
-      console.log(this.cartasSeleccionadas);
     },
 
     // Función para obtener la URL de la imagen del Pokémon
@@ -47,7 +61,8 @@ createApp({
     },
 
     ocultarModal(){
-      this.mostrarModal= false;
+      this.mostrarModal = false;
+      this.generarPokemonsEnemigo();
     }
 
 

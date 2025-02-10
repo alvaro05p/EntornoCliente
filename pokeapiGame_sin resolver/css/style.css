@@ -51,6 +51,19 @@
     transition: transform .3s;
 }
 
+.carta-dorso{
+    position:relative;
+    width:200px;
+    max-height:350px;
+    float:left;
+    margin:10px;
+    padding:10px;
+    border-radius:5px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform .3s;
+}
+
 .carta:hover {
     transform: scale(1.1);
     transition: transform .3s;
@@ -91,7 +104,6 @@
 
 .dorso {
     width: 99%;
-    height: 99%;
     border-radius:5px;
     position: absolute;
     top:0;

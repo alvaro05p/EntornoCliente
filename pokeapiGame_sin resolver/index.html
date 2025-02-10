@@ -16,8 +16,10 @@
     </div>
     <div id="main">
         <div id="machine">
-            <div class="carta">
-                <img src="img/dorso.png" alt="Machine">
+            <div>
+                <div class="carta-dorso" v-for="(id, index) in cartasEnemigo" :key="id">
+                    <img class="dorso" src="img/dorso.png" alt="Machine">
+                </div>
             </div>
         </div>
         <div id="play">
@@ -48,7 +50,7 @@
     <div class="pokedex">
         <div class="modal" v-show="mostrarModal">
             <div class="modal-content scroll">
-            <div v-for="(id, index) in pokemonIds" :key="index" :data-id="id" class="carta" @click="seleccionarCarta(id)">
+            <div v-for="(id, index) in pokemonIds" :key="index" :data-id="id" class="carta" @click="seleccionarCarta(id,$event)">
                 <div>
                 <img :src="getPokemonImage(id)" alt="Pokemon">
                 </div>
