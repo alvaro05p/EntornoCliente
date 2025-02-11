@@ -24,16 +24,23 @@
         </div>
         <div id="play">
             <div id="jugadaMachine">
-
+                <div class="carta-dorso">
+                    <img class="dorso" id="jugadaMaquinaImg" src="img/dorso.png" alt="Machine">
+                </div>
+            </div>
+            <div id="vsImage">
+                <img src="img/vs.jpeg" alt="vs">
             </div>
             <div id="jugadaPlayer">
-
+                <div class="carta-dorso">
+                    <img class="dorso" id="jugadaPlayerImg" src="img/dorso.png" alt="Machine">
+                </div>
             </div>
         </div>
         <div id="player">
-            <div v-for="(id, index) in cartasSeleccionadas" :key="index" :data-id="id" class="carta" >
+            <div v-for="(id, index) in cartasSeleccionadas" :key="index" :data-id="id" class="carta" @click="sacarCarta(id)">
                 <div>
-                <img :src="getPokemonImage(id)" alt="Pokemon">
+                    <img :src="getPokemonImage(id)" alt="Pokemon">
                 </div>
                 <div>{{ getPokemonName(id) }}</div>
             </div>
@@ -50,12 +57,12 @@
     <div class="pokedex">
         <div class="modal" v-show="mostrarModal">
             <div class="modal-content scroll">
-            <div v-for="(id, index) in pokemonIds" :key="index" :data-id="id" class="carta" @click="seleccionarCarta(id,$event)">
-                <div>
-                <img :src="getPokemonImage(id)" alt="Pokemon">
+                <div v-for="(id, index) in pokemonIds" :key="index" :data-id="id" class="carta" @click="seleccionarCarta(id,$event)">
+                    <div>
+                    <img :src="getPokemonImage(id)" alt="Pokemon">
+                    </div>
+                    <div>{{ getPokemonName(id) }}</div>
                 </div>
-                <div>{{ getPokemonName(id) }}</div>
-            </div>
             </div>
             <button id="jugar" v-show="cartasSeleccionadas.length == 5 && mostrarModal" @click="ocultarModal()">Jugar</button>
         </div>

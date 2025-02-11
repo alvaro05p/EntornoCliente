@@ -7,7 +7,8 @@ createApp({
       pokemonData: {},
       cartasSeleccionadas : [],
       mostrarModal: true,
-      cartasEnemigo: []
+      cartasEnemigo: [],
+      i:1
     };
   },
   methods: {
@@ -63,6 +64,14 @@ createApp({
     ocultarModal(){
       this.mostrarModal = false;
       this.generarPokemonsEnemigo();
+    },
+
+    sacarCarta(id){
+      document.getElementById("jugadaPlayerImg").src = this.getPokemonImage(id);
+
+      setTimeout(() => {
+        document.getElementById("jugadaMaquinaImg").src = this.getPokemonImage(this.cartasEnemigo[this.i]);
+      }, 2000);
     }
 
 
