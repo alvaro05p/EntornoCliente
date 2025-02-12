@@ -8,7 +8,8 @@ createApp({
       cartasSeleccionadas : [],
       mostrarModal: true,
       cartasEnemigo: [],
-      i:1
+      i:0,
+      stats: []
     };
   },
   methods: {
@@ -61,6 +62,12 @@ createApp({
       return pokemon ? pokemon.name : '';
     },
 
+    getPokemonStats(id) {
+      const pokemon = this.pokemonData[id];
+      this.stats = [pokemon.stats[0].base_stat, pokemon.stats[4].base_stat];
+      return this.stats;
+    },
+
     ocultarModal(){
       this.mostrarModal = false;
       this.generarPokemonsEnemigo();
@@ -72,6 +79,10 @@ createApp({
       setTimeout(() => {
         document.getElementById("jugadaMaquinaImg").src = this.getPokemonImage(this.cartasEnemigo[this.i]);
       }, 2000);
+
+      this.i++;
+
+      console.log(this.getPokemonData(id));
     }
 
 

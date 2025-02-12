@@ -1,3 +1,25 @@
+body {
+    position: relative;
+    background-image: url("/img/campo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Capa oscura */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Ajusta la opacidad (0 = transparente, 1 = negro total) */
+    pointer-events: none; /* Permite interactuar con los elementos debajo */
+    z-index: -1;
+}
+
+
 @font-face {
     font-family: "pokemon";
     src: url("../fonts/Ketchum.otf");
@@ -41,6 +63,7 @@
 #vsImage img{
     width: 200px;
     margin-top: 32%;
+    border-radius: 100px;
 }
 
 .carta {
