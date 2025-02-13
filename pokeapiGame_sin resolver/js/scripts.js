@@ -75,16 +75,18 @@ createApp({
 
     sacarCarta(id){
       document.getElementById("jugadaPlayerImg").src = this.getPokemonImage(id);
+      console.log("Pokemon jugador: " + this.getPokemonStats(id));
 
       setTimeout(() => {
         document.getElementById("jugadaMaquinaImg").src = this.getPokemonImage(this.cartasEnemigo[this.i]);
       }, 2000);
+      console.log("Pokemon maquina: " + this.getPokemonStats(this.cartasEnemigo[this.i]));
 
       this.i++;
 
-      console.log(this.getPokemonData(id));
-    }
+      
 
+    }
 
   },
 
