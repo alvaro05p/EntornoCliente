@@ -9,7 +9,9 @@ createApp({
       mostrarModal: true,
       cartasEnemigo: [],
       i:0,
-      stats: []
+      stats: [],
+      vidaUser: 100,
+      vidaEnemigo: 100
     };
   },
   methods: {
@@ -64,7 +66,7 @@ createApp({
 
     getPokemonStats(id) {
       const pokemon = this.pokemonData[id];
-      this.stats = [pokemon.stats[0].base_stat, pokemon.stats[4].base_stat];
+      this.stats = [pokemon.stats[0].base_stat, pokemon.stats[4].base_stat, pokemon.stats[5].base_stat];
       return this.stats;
     },
 
@@ -74,17 +76,19 @@ createApp({
     },
 
     sacarCarta(id){
+      
       document.getElementById("jugadaPlayerImg").src = this.getPokemonImage(id);
       console.log("Pokemon jugador: " + this.getPokemonStats(id));
 
       setTimeout(() => {
         document.getElementById("jugadaMaquinaImg").src = this.getPokemonImage(this.cartasEnemigo[this.i]);
+        document.querySelectorAll(".info").forEach(info => {
+          info.style.opacity = "1";
+        });
       }, 2000);
       console.log("Pokemon maquina: " + this.getPokemonStats(this.cartasEnemigo[this.i]));
 
       this.i++;
-
-      
 
     }
 
