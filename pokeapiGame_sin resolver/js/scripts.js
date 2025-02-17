@@ -72,46 +72,6 @@ createApp({
       return this.stats;
     },
 
-    // Función para obtener 2 movimientos aleatorios con poder no nulo
-    async movimientos(id) {
-      const pokemon = this.pokemonData[id];
-      const movimientosValidos = [];
-    
-      for (let i = 0; i < pokemon.moves.length; i++) {
-        const moveUrl = pokemon.moves[i].move.url;
-        const moveData = await fetch(moveUrl)
-          .then(response => response.json())
-          .catch(error => console.log('Error al obtener el movimiento:', error));
-        
-        if (moveData.power !== null) {
-          movimientosValidos.push({
-            name: moveData.names.find(name => name.language.name === 'es').name, // Nombre en español
-            power: moveData.power
-          });
-        }
-      }
-
-      if (movimientosValidos.length < 2) {
-        console.log('No hay suficientes movimientos válidos con poder');
-        return;
-      }
-    
-      // Seleccionamos aleatoriamente 2 movimientos
-      const movimientosAleatorios = [];
-      for (let i = 0; i < 2; i++) {
-        const randomIndex = Math.floor(Math.random() * movimientosValidos.length);
-        movimientosAleatorios.push(movimientosValidos[randomIndex]);
-        movimientosValidos.splice(randomIndex, 1);
-      }
-    
-      console.log('Movimientos seleccionados:');
-      movimientosAleatorios.forEach(movimiento => {
-        console.log(`Movimiento: ${movimiento.name}, Poder: ${movimiento.power}`);
-      });
-    
-      return movimientosAleatorios;
-    },
-
     // Función para ocultar el modal y generar enemigos
     ocultarModal() {
       this.mostrarModal = false;
@@ -130,25 +90,25 @@ createApp({
         });
         
         // Obtener los movimientos del Pokémon jugador y enemigo
-        const movimientosJugador = await this.movimientos(id);
-        const movimientosEnemigo = await this.movimientos(this.cartasEnemigo[this.i]);
-
-        this.movimientosJugador = movimientosJugador;
-        this.movimientosEnemigo = movimientosEnemigo;
+        
 
       }, 2000);
+
+      
       console.log("Pokemon maquina: " + this.getPokemonStats(this.cartasEnemigo[this.i]));
 
+      
+      this.llenarStats(this.getPokemonStats(this.cartasEnemigo[this.i]), this.getPokemonStats(id), id);
+    
       this.i++;
-      this.llenarStats(this.getPokemonStats(this.cartasEnemigo[this.i]), this.getPokemonStats(id));
     },
 
     // Función para llenar las estadísticas en la pantalla
-    llenarStats(maquina, jugador) {
+    async llenarStats(maquina, jugador, id) {
       // Actualizamos estadísticas del jugador y la máquina con Vue
       this.vidaUser = jugador[0];
       this.vidaEnemigo = maquina[0];
-
+    
       document.getElementById("vidaP").textContent = jugador[0];      // Vida
       document.getElementById("defensaP").textContent = jugador[1];   // Defensa
       document.getElementById("velocidadP").textContent = jugador[2]; // Velocidad
@@ -156,8 +116,40 @@ createApp({
       document.getElementById("vidaM").textContent = maquina[0];      // Vida
       document.getElementById("defensaM").textContent = maquina[1];   // Defensa
       document.getElementById("velocidadM").textContent = maquina[2]; // Velocidad
-    }
+    
+      // Esperar los movimientos del jugador y enemigo antes de continuar
+      this.movimientosJugador = await this.getMovimientos(id);
+      this.movimientosEnemigo = await this.getMovimientos(this.cartasEnemigo[this.i]);
+    
+      // Ahora que los movimientos están cargados, mostramos los resultados
+      console.log("Movimientos Jugador:", this.movimientosJugador);
+      console.log("Movimientos Enemigo:", this.movimientosEnemigo);
+    },
+    
 
+    async getMovimientos(id) {
+      const pokemon = this.pokemonData[id];
+
+      // Verificar si el Pokémon tiene movimientos
+      if (!pokemon || !pokemon.moves || pokemon.moves.length === 0) {
+        console.warn(`No hay movimientos disponibles para el Pokémon con ID: ${id}`);
+        return [];
+      }
+
+      // Extraer nombres y URLs de los movimientos
+      let movimientosValidos = pokemon.moves
+        .map(move => ({ nombre: move.move.name, url: move.move.url }));
+
+      // Mezclar aleatoriamente los movimientos
+      movimientosValidos = movimientosValidos.sort(() => Math.random() - 0.5);
+
+      // Seleccionar los primeros dos movimientos
+      const movimientosSeleccionados = movimientosValidos.slice(0, 2);
+
+      return movimientosSeleccionados;
+    }
+    
+  
   },
 
   mounted() {
