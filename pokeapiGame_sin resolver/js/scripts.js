@@ -122,11 +122,10 @@ createApp({
       this.movimientosEnemigo = await this.getMovimientos(this.cartasEnemigo[this.i]);
     
       // Ahora que los movimientos están cargados, mostramos los resultados
-      console.log("Movimientos Jugador:", this.movimientosJugador);
-      console.log("Movimientos Enemigo:", this.movimientosEnemigo);
+      console.log(await this.getMovimientos(id));
+      console.log(await this.getMovimientos(this.cartasEnemigo[this.i]));
     },
     
-
     async getMovimientos(id) {
       const pokemon = this.pokemonData[id];
 
