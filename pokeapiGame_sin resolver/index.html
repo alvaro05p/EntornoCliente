@@ -25,11 +25,8 @@
         <div id="play">
             <div id="jugadaMachine">
                 <div class="movimientos-maquina">
-                    <div class="movimiento" v-if="movimientosJugador.length > 0">
-                        {{ movimientosEnemigo[0].nombre }}
-                    </div>
-                    <div class="movimiento" v-if="movimientosJugador.length > 0">
-                        {{ movimientosEnemigo[1].nombre }}
+                    <div class="movimiento" :id="movimiento.poder" v-for="(movimiento, index) in movimientosEnemigo" :key="index" @click="atacar(movimiento.poder)">
+                        {{ movimiento.nombre }} ({{movimiento.poder}})
                     </div>
                 </div>
                 <div class="carta-dorso">
@@ -82,8 +79,8 @@
                     </div>
                 </div>
                 <div class="movimientos-jugador">
-                    <div class="movimiento" v-for="(movimiento, index) in movimientosJugador" :key="index">
-                        {{ movimiento.nombre }}
+                    <div class="movimiento" :id="movimiento.poder" v-for="(movimiento, index) in movimientosJugador" :key="index" @click="atacar(movimiento.poder)">
+                        {{ movimiento.nombre }} ({{movimiento.poder}})
                     </div>
                 </div>
             </div>

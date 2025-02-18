@@ -361,3 +361,7 @@ body::after {
     color: white;
     width: 200px;
 }
+
+.movimiento:hover{
+    background-color: rgb(53, 53, 53);
+}

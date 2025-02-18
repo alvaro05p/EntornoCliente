@@ -128,24 +128,48 @@ createApp({
     
     async getMovimientos(id) {
       const pokemon = this.pokemonData[id];
-
+    
       // Verificar si el Pokémon tiene movimientos
       if (!pokemon || !pokemon.moves || pokemon.moves.length === 0) {
         console.warn(`No hay movimientos disponibles para el Pokémon con ID: ${id}`);
         return [];
       }
-
+    
       // Extraer nombres y URLs de los movimientos
-      let movimientosValidos = pokemon.moves
-        .map(move => ({ nombre: move.move.name, url: move.move.url }));
-
+      let movimientosValidos = pokemon.moves.map(move => move.move.url);
+    
       // Mezclar aleatoriamente los movimientos
       movimientosValidos = movimientosValidos.sort(() => Math.random() - 0.5);
-
+    
       // Seleccionar los primeros dos movimientos
       const movimientosSeleccionados = movimientosValidos.slice(0, 2);
+    
+      // Hacer fetch de cada movimiento para obtener ID y poder
+      const detallesMovimientos = await Promise.all(
+        movimientosSeleccionados.map(async (url) => {
+          try {
+            const response = await fetch(url);
+            const data = await response.json();
+    
+            return {
+              id: data.id,
+              nombre: data.name,
+              poder: data.power ?? "Desconocido" // Algunos movimientos no tienen poder definido
+            };
+          } catch (error) {
+            console.error(`Error obteniendo datos del movimiento: ${url}`, error);
+            return null;
+          }
+        })
+      );
+    
+      // Filtrar movimientos nulos en caso de errores en la API
+      return detallesMovimientos.filter(mov => mov !== null);
+    },
 
-      return movimientosSeleccionados;
+    atacar(poder
+    ){
+      alert(poder);
     }
     
   
