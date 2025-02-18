@@ -79,14 +79,14 @@
                     </div>
                 </div>
                 <div class="movimientos-jugador">
-                    <div class="movimiento" :id="movimiento.poder" v-for="(movimiento, index) in movimientosJugador" :key="index" @click="atacar(movimiento.poder)">
+                    <div class="movimiento movimiento-hover" :id="movimiento.poder" v-for="(movimiento, index) in movimientosJugador" :key="index" @click="atacar(movimiento.poder)">
                         {{ movimiento.nombre }} ({{movimiento.poder}})
                     </div>
                 </div>
             </div>
         </div>
         <div id="player">
-            <div v-for="(id, index) in cartasSeleccionadas" :key="index" :data-id="id" class="carta" @click="sacarCarta(id)">
+            <div v-for="(id, index) in cartasSeleccionadas" :key="index" :data-id="id" class="carta" @click="sacarCarta(id, $event)">
                 <div>
                     <img :src="getPokemonImage(id)" alt="Pokemon">
                 </div>

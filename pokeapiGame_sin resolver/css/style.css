@@ -362,6 +362,10 @@ body::after {
     width: 200px;
 }
 
-.movimiento:hover{
+.movimiento-hover:hover{
     background-color: rgb(53, 53, 53);
+}
+
+.combatiendo{
+    opacity: 50%;
 }

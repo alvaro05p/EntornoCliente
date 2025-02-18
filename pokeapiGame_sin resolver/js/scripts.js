@@ -79,10 +79,12 @@ createApp({
     },
 
     // Función para hacer una jugada con las cartas seleccionadas
-    async sacarCarta(id) {
+    async sacarCarta(id, event) {
+      document.querySelector("#jugadaMachine .vida").style.width = `100%`;
+      document.querySelector("#jugadaPlayer .vida").style.width = `100%`;
       document.getElementById("jugadaPlayerImg").src = this.getPokemonImage(id);
       console.log("Pokemon jugador: " + this.getPokemonStats(id));
-
+      event.currentTarget.classList.add("combatiendo");
       setTimeout(async () => {
         document.getElementById("jugadaMaquinaImg").src = this.getPokemonImage(this.cartasEnemigo[this.i]);
         document.querySelectorAll(".info").forEach(info => {
@@ -90,6 +92,8 @@ createApp({
         });
         
         // Obtener los movimientos del Pokémon jugador y enemigo
+        this.pokemonJugador = this.pokemonData[id]; 
+        this.pokemonEnemigo = this.pokemonData[this.cartasEnemigo[this.i]];
         
 
       }, 2000);
@@ -100,7 +104,10 @@ createApp({
       
       this.llenarStats(this.getPokemonStats(this.cartasEnemigo[this.i]), this.getPokemonStats(id), id);
     
-      this.i++;
+      if(this.i < 4){
+        this.i++;
+      }
+      
     },
 
     // Función para llenar las estadísticas en la pantalla
@@ -135,44 +142,143 @@ createApp({
         return [];
       }
     
-      // Extraer nombres y URLs de los movimientos
       let movimientosValidos = pokemon.moves.map(move => move.move.url);
     
       // Mezclar aleatoriamente los movimientos
       movimientosValidos = movimientosValidos.sort(() => Math.random() - 0.5);
     
-      // Seleccionar los primeros dos movimientos
-      const movimientosSeleccionados = movimientosValidos.slice(0, 2);
+      const movimientosSeleccionados = [];
+      let intentos = 0;
+      const maxIntentos = 10; // Para evitar bucles infinitos
     
-      // Hacer fetch de cada movimiento para obtener ID y poder
-      const detallesMovimientos = await Promise.all(
-        movimientosSeleccionados.map(async (url) => {
-          try {
-            const response = await fetch(url);
-            const data = await response.json();
+      while (movimientosSeleccionados.length < 2 && intentos < maxIntentos) {
+        intentos++;
+        if (movimientosValidos.length === 0) break;
     
-            return {
+        // Obtener una URL de movimiento y eliminarla de la lista
+        const url = movimientosValidos.shift();
+    
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+    
+          // Verificar si el poder es válido
+          if (data.power !== null) {
+            movimientosSeleccionados.push({
               id: data.id,
               nombre: data.name,
-              poder: data.power ?? "Desconocido" // Algunos movimientos no tienen poder definido
-            };
-          } catch (error) {
-            console.error(`Error obteniendo datos del movimiento: ${url}`, error);
-            return null;
+              poder: data.power
+            });
           }
-        })
-      );
+        } catch (error) {
+          console.error(`Error obteniendo datos del movimiento: ${url}`, error);
+        }
+      }
     
-      // Filtrar movimientos nulos en caso de errores en la API
-      return detallesMovimientos.filter(mov => mov !== null);
+      if (movimientosSeleccionados.length < 2) {
+        console.warn(`No se encontraron suficientes movimientos con poder válido para el Pokémon ID: ${id}`);
+      }
+    
+      return movimientosSeleccionados;
     },
 
-    atacar(poder
-    ){
-      alert(poder);
+    atacar(poder) {
+
+      if (!this.pokemonJugador || !this.pokemonEnemigo) {
+        console.warn("No hay Pokémon en batalla.");
+        return;
+      }
+    
+      // Obtener estadísticas
+      const jugadorVelocidad = this.stats[2]; // Velocidad del jugador
+      const enemigoVelocidad = this.getPokemonStats(this.cartasEnemigo[this.i])[2]; // Velocidad del enemigo
+    
+      const jugadorDefensa = this.stats[1]; // Defensa del jugador
+      const enemigoDefensa = this.getPokemonStats(this.cartasEnemigo[this.i])[1]; // Defensa del enemigo
+    
+      // Determinar quién ataca primero (basado en velocidad)
+      let atacante = "jugador";
+      if (enemigoVelocidad > jugadorVelocidad) {
+        atacante = "enemigo";
+      }
+    
+      // Función para calcular el daño
+      const calcularDanio = (poder, defensa) => {
+        return Math.max(1, Math.floor((poder - defensa) / 2)); // El daño mínimo será 1
+      };
+    
+      // Turno de ataque
+      if (atacante === "jugador") {
+        const danio = calcularDanio(poder, enemigoDefensa);
+        this.vidaEnemigo = Math.max(0, this.vidaEnemigo - danio); // Evita valores negativos
+        document.querySelector("#vidaM").textContent = this.vidaEnemigo;
+    
+        // Actualizar barra de vida
+        document.querySelector("#jugadaMachine .vida").style.width = `${this.vidaEnemigo}%`;
+    
+        console.log(`El jugador ataca con poder ${poder}, causando ${danio} de daño.`);
+      }
+    
+      if (this.vidaEnemigo > 0) {
+        setTimeout(() => {
+          // Turno del enemigo
+          const ataqueEnemigo = this.movimientosEnemigo[0].poder; // Elige el primer ataque enemigo
+          const danioEnemigo = calcularDanio(ataqueEnemigo, jugadorDefensa);
+          this.vidaUser = Math.max(0, this.vidaUser - danioEnemigo);
+          document.querySelector("#vidaP").textContent = this.vidaUser;
+    
+          // Actualizar barra de vida
+          document.querySelector("#jugadaPlayer .vida").style.width = `${this.vidaUser}%`;
+    
+          console.log(`El enemigo ataca con poder ${ataqueEnemigo}, causando ${danioEnemigo} de daño.`);
+    
+          // Verificar si alguien perdió
+          this.verificarGanador();
+        }, 1500); // Retraso para simular turno del enemigo
+      } else {
+        this.verificarGanador();
+      }
+    },
+    
+    verificarGanador() {
+      if (this.vidaUser <= 0) {
+        alert("¡Tu Pokémon ha sido derrotado! Elige otro para continuar.");
+        this.siguienteCombate();
+      } else if (this.vidaEnemigo <= 0) {
+        alert("¡Has derrotado al Pokémon enemigo! Ahora enfrentarás al siguiente.");
+        this.siguienteCombate();
+      }
+    },
+    
+    siguienteCombate() {
+      // Si ya no hay Pokémon disponibles, termina el juego
+      if (this.cartasSeleccionadas.length === 0) {
+        alert("¡Te has quedado sin Pokémon! Has perdido la batalla.");
+        return;
+      }
+    
+      // Si el enemigo se queda sin Pokémon, el jugador gana
+      if (this.i >= this.cartasEnemigo.length - 1) {
+        alert("¡Has derrotado a todos los Pokémon enemigos! ¡Ganaste la batalla!");
+        location.reload();
+        return;
+      }
+    
+      // Pasar al siguiente Pokémon enemigo
+      this.i++;
+    
+      // Resetear valores de vida y mostrar la selección de un nuevo Pokémon
+      this.vidaUser = 100;
+      this.vidaEnemigo = 100;
+    
+      // Vaciar movimientos
+      this.movimientosJugador = [];
+      this.movimientosEnemigo = [];
+    
+      // Pedir al jugador seleccionar otro Pokémon
+      alert("Selecciona otro Pokémon para continuar el combate.");
     }
     
-  
   },
 
   mounted() {
