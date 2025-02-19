@@ -85,11 +85,11 @@ createApp({
       document.getElementById("jugadaPlayerImg").src = this.getPokemonImage(id);
       console.log("Pokemon jugador: " + this.getPokemonStats(id));
       event.currentTarget.classList.add("combatiendo");
+      
       setTimeout(async () => {
         document.getElementById("jugadaMaquinaImg").src = this.getPokemonImage(this.cartasEnemigo[this.i]);
         document.querySelectorAll(".info").forEach(info => {
           info.style.opacity = "1";
-          info.style.pointerEvents = "none";
         });
         
         // Obtener los movimientos del Pokémon jugador y enemigo

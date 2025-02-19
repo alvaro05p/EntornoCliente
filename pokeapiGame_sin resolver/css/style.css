@@ -369,6 +369,8 @@ body::after {
 
 .combatiendo{
     opacity: 50%;
+    pointer-events: none;
+
 }
 
 #battle-text-box {
