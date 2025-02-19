@@ -120,9 +120,9 @@ createApp({
       document.getElementById("defensaP").textContent = jugador[1];   // Defensa
       document.getElementById("velocidadP").textContent = jugador[2]; // Velocidad
     
-      document.getElementById("vidaM").textContent = maquina[0];      // Vida
-      document.getElementById("defensaM").textContent = maquina[1];   // Defensa
-      document.getElementById("velocidadM").textContent = maquina[2]; // Velocidad
+      document.getElementById("vidaM").textContent = maquina[0];
+      document.getElementById("defensaM").textContent = maquina[1];   
+      document.getElementById("velocidadM").textContent = maquina[2]; 
     
       // Esperar los movimientos del jugador y enemigo antes de continuar
       this.movimientosJugador = await this.getMovimientos(id);
@@ -216,7 +216,7 @@ createApp({
         // Actualizar barra de vida
         document.querySelector("#jugadaMachine .vida").style.width = `${this.vidaEnemigo}%`;
     
-        console.log(`El jugador ataca con poder ${poder}, causando ${danio} de daño.`);
+        document.getElementById("battle-text").textContent =`El jugador ataca con poder ${poder}, causando ${danio} de daño.`;
       }
     
       if (this.vidaEnemigo > 0) {
@@ -230,7 +230,7 @@ createApp({
           // Actualizar barra de vida
           document.querySelector("#jugadaPlayer .vida").style.width = `${this.vidaUser}%`;
     
-          console.log(`El enemigo ataca con poder ${ataqueEnemigo}, causando ${danioEnemigo} de daño.`);
+          document.getElementById("battle-text").textContent =`El enemigo ataca con poder ${ataqueEnemigo}, causando ${danioEnemigo} de daño.`;
     
           // Verificar si alguien perdió
           this.verificarGanador();
@@ -242,10 +242,10 @@ createApp({
     
     verificarGanador() {
       if (this.vidaUser <= 0) {
-        alert("¡Tu Pokémon ha sido derrotado! Elige otro para continuar.");
+        document.getElementById("battle-text").textContent ="¡Tu Pokémon ha sido derrotado! Elige otro para continuar.";
         this.siguienteCombate();
       } else if (this.vidaEnemigo <= 0) {
-        alert("¡Has derrotado al Pokémon enemigo! Ahora enfrentarás al siguiente.");
+        document.getElementById("battle-text").textContent ="¡Has derrotado al Pokémon enemigo! Ahora enfrentarás al siguiente.";
         this.siguienteCombate();
       }
     },
@@ -253,13 +253,13 @@ createApp({
     siguienteCombate() {
       // Si ya no hay Pokémon disponibles, termina el juego
       if (this.cartasSeleccionadas.length === 0) {
-        alert("¡Te has quedado sin Pokémon! Has perdido la batalla.");
+        document.getElementById("battle-text").textContent = "¡Te has quedado sin Pokémon! Has perdido la batalla.";
         return;
       }
     
       // Si el enemigo se queda sin Pokémon, el jugador gana
       if (this.i >= this.cartasEnemigo.length - 1) {
-        alert("¡Has derrotado a todos los Pokémon enemigos! ¡Ganaste la batalla!");
+        document.getElementById("battle-text").textContent = "¡Has derrotado a todos los Pokémon enemigos! ¡Ganaste la batalla!";
         location.reload();
         return;
       }
@@ -276,7 +276,7 @@ createApp({
       this.movimientosEnemigo = [];
     
       // Pedir al jugador seleccionar otro Pokémon
-      alert("Selecciona otro Pokémon para continuar el combate.");
+      document.getElementById("battle-text").textContent = "Selecciona otro Pokémon para continuar el combate.";
     }
     
   },

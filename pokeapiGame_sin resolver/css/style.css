@@ -360,6 +360,7 @@ body::after {
     border-radius: 10px;
     color: white;
     width: 200px;
+    font-family: "Pixelify Sans", serif;
 }
 
 .movimiento-hover:hover{
@@ -368,4 +369,27 @@ body::after {
 
 .combatiendo{
     opacity: 50%;
+}
+
+#battle-text-box {
+    position: absolute;
+    right: 80%;
+    transform: translateX(-10%);
+    width: 15%;
+    height: 10%;
+    bottom: 50%;
+    background-color: rgb(194, 194, 194);
+    border: 4px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: "Pixelify Sans", serif;
+    font-optical-sizing: auto;
+    font-size: 20px;
+    color: black;
+    text-align: center;
+    box-shadow: 4px 4px 0 black;
+}
+
+#battle-text-box p {
+    margin: 0;
 }
